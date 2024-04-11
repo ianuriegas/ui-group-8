@@ -1,0 +1,32 @@
+.nav2-container{
+    background-color: #218b4e;
+    width: 100vw;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-decoration: none;
+    font-size: 16px;
+    
+}
+.none{
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+   
+    
+}
+.nav-box{
+    display: flex;
+    align-items: center;
+    height: 99%;
+    
+}
+.nav-box:hover {
+    border-bottom: 2px white solid;
+}
+.none:hover{
+    font-size: 20px;
+}

@@ -1,0 +1,16 @@
+.freq-items-row{
+    width: 100vw;
+    height: 30vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+.freq-items-container{
+display: flex;
+flex-direction: row;
+justify-content: space-evenly;
+height: 90%;
+}
+.freq-label{
+    margin-left: 20px;
+}

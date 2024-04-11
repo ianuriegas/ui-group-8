@@ -1,0 +1,20 @@
+.wishlist-row{
+    height: 30vh;
+    width: 100vw;
+    background-color:white;
+    display: flex;
+    flex-direction: column;
+}
+.wishlist-label{
+    margin-left: 20px;
+    margin-top: 0px;
+
+}
+.wishlist-container{
+    display: flex;
+    height: 90%;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
