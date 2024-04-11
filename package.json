@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "ejs": "^3.1.9",
-    "express": "^4.19.2",
-    "react-router-dom": "^6.22.3"
+    "express": "^4.19.2"
   }
 }

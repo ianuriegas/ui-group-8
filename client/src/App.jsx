@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "./componenets/Navbar";
-import Navbar2 from "./componenets/Navbar2";
-import Promotion from "./componenets/Promotion";
-import FreqItems from "./componenets/FreqItems";
-import Wishlist from "./componenets/Wishlist";
-import Footer from "./componenets/Footer";
+import Navbar from "./Navbar";
+import Navbar2 from "./Navbar2";
+import Promotion from "./Promotion";
+import FreqItems from "./FreqItems";
+import Wishlist from "./Wishlist";
+import Footer from "./Footer";
 
 function App() {
   const [backendData, setBackendData] = useState([{}]);
