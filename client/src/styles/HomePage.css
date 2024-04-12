@@ -19,6 +19,7 @@
    
     height: 70%;
     gap: 5%;
+    margin-top: 16px;
 
 }
 .section{
@@ -26,9 +27,11 @@
     font-size: 30px;
     font-weight: bold;
     color: #275143;
+    margin-bottom: 20px;
 }
 
 .freq-cards-row{
+    
     display: flex;
     flex-direction: row;
     height: 70%;
