@@ -1,0 +1,33 @@
+.promo-container{
+    height: 90%;
+    width: 200px;
+    
+    background-color: #FFDC62;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+}
+.promo-description{
+    margin-top: 20px;
+
+    font-size: 18px;
+    font-weight: bold;
+    width: 100px;
+    
+    
+    
+}
+.promo-code{
+    margin-top: 20px;
+
+    font-size: 18px;
+    font-weight: bold;
+    color: #616161;
+    margin-bottom: 10px;
+    
+
+}

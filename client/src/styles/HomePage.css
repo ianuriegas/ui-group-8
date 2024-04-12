@@ -1,0 +1,70 @@
+.homepage-container{
+    height: 100%;
+    width: 100%;
+    border: 0px orange solid;
+}
+.row{
+    width: 100vw;
+    height: 29%;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 26px;
+}
+
+.promo-cards-row{
+    display: flex;
+    flex-direction: row;
+    
+   
+    height: 70%;
+    gap: 5%;
+
+}
+.section{
+    margin-top: 16px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #275143;
+}
+
+.freq-cards-row{
+    display: flex;
+    flex-direction: row;
+    height: 70%;
+    gap: 5%;
+}
+
+.freqB{
+    width: 300px;
+    height: 90%;
+    background-color: #00B569;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.freqB:hover{
+    background-color: white;
+    color: #303030;
+    border: 1px #D2D2D2 solid;
+}
+.wish-img-row{
+    display: flex;
+    flex-direction: row;
+    height: 70%;
+    gap: 3%;
+
+}
+.wish-img{
+    height: 80%;
+    width:150px;
+    border-radius: 5px;
+   
+}
