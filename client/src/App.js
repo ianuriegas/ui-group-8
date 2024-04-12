@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [backendData, setBackendData] = useState([{}]);
@@ -12,12 +13,15 @@ function App() {
   }, []);
 
   return (
-    <div>
-      {typeof backendData.users === "undefined" ? (
+    <div className="app">
+      <Navbar />
+      
+
+      {/* {typeof backendData.users === "undefined" ? (
         <p>Loading...</p>
       ) : (
         backendData.users.map((user, i) => <p key={i}> {user}</p>)
-      )}
+      )} */}
     </div>
   );
 }
