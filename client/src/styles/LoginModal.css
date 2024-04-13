@@ -1,0 +1,70 @@
+.main-login-modal-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 700px;
+    background-color: #275143;
+    border-radius: 40px;
+    padding: 30px;
+    color: white;
+}
+
+.main-login-modal-card:focus {
+    outline: none;
+}
+
+.main-login-modal-card .modal-text {
+    font-size: 50px;
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+
+.main-login-modal-card .login-button {
+    background-color: #FFDC62;
+    color: #E2743E;
+    height: 65px;
+    width: 175px;
+    text-transform: none;
+    font-size: xx-large;
+    font-weight: bolder;
+    border-radius: 13px;
+}
+
+.main-login-modal-card .login-button:hover {
+    background-color: #d5b952;
+}
+
+#modal-logo {
+    height: 190px;
+    width: 190px;
+    margin-left: 15px;
+}
+
+::placeholder {
+    color: #275143;
+    font-family: Arial, sans-serif;
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: #275143;
+    font-family: Arial, sans-serif;
+}
+
+::-ms-input-placeholder {
+    color: #275143;
+    font-family: Arial, sans-serif;
+}
+
+.main-login-modal-card .white-link {
+    color: white;
+    text-decoration-color: white;
+    cursor: pointer;
+}
+
+.main-login-modal-card .error-message {
+    color: #A6DFFF;
+    padding-top: 15px;
+}
