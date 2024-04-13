@@ -3,7 +3,7 @@ import * as React from "react";
 import "../styles/LoginModal.css";
 import logo from "../images/logo.png";
 import { Box, Button, Link, Modal, Stack, TextField, Typography } from "@mui/material";
-export default function LoginModal({ loginOpen, handleLoginClose, handleCreateAccountOpen }) {
+export default function LoginModal({ loginOpen, handleLoginClose, handleCreateAccountOpen, handleForgotPasswordOpen }) {
   return (
     <div>
       <Modal
@@ -22,7 +22,7 @@ export default function LoginModal({ loginOpen, handleLoginClose, handleCreateAc
             <input type="password" id="password" name="password" placeholder="Password" style={{height: "60px", width: "350px"}} />
             <br></br>
             <Stack direction={"row"} sx={{ width: '65%', justifyContent: 'space-between' }} className="stack-row">
-                <Link href="#" className="white-link">Forgot Password</Link>
+                <Link onClick={() => { handleLoginClose(); handleForgotPasswordOpen();}} className="white-link">Forgot Password</Link>
                 <Link onClick={() => { handleLoginClose(); handleCreateAccountOpen();}} className="white-link">Create Account</Link>
             </Stack>
 

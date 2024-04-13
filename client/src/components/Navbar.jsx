@@ -5,15 +5,19 @@ import person from '../images/person.png'
 import cart from '../images/cart.png'
 import LoginModal from './LoginModal'
 import CreateAccountModal from './CreateAccountModal'
+import ForgotPasswordModal from './ForgotPasswordModal'
 
 function Navbar() {
   const [loginOpen, setLoginOpen] = React.useState(false);
   const [createAccountOpen, setCreateAccountOpen] = React.useState(false);
-  
+  const [forgotPasswordOpen, setForgotPasswordOpen] = React.useState(false);
+
   const handleLoginOpen = () => setLoginOpen(true);
   const handleLoginClose = () => setLoginOpen(false);
   const handleCreateAccountOpen = () => setCreateAccountOpen(true);
   const handleCreateAccountClose = () => setCreateAccountOpen(false);
+  const handleForgotPasswordOpen = () => setForgotPasswordOpen(true);
+  const handleForgotPasswordClose = () => setForgotPasswordOpen(false);
 
   return (
     <div className='nav-container'>
@@ -31,9 +35,9 @@ function Navbar() {
             <div className='icon-group'>
 
             <a onClick={handleLoginOpen}><img  className='icon' src={person} alt="Profile Icon That Allows User To Sign Up Or Log in" /></a>
-            <LoginModal loginOpen={loginOpen} handleLoginClose={handleLoginClose} handleCreateAccountOpen={handleCreateAccountOpen}  />
+            <LoginModal loginOpen={loginOpen} handleLoginClose={handleLoginClose} handleCreateAccountOpen={handleCreateAccountOpen} handleForgotPasswordOpen={handleForgotPasswordOpen}  />
             <CreateAccountModal createAccountOpen={createAccountOpen} handleCreateAccountClose={handleCreateAccountClose} handleLoginOpen={handleLoginOpen} />
-            {/* <CreateAccountModal open={createAccountOpen} handleClose={handleCreateAccountClose} /> */}
+            <ForgotPasswordModal forgotPasswordOpen={forgotPasswordOpen} handleForgotPasswordClose={handleForgotPasswordClose} handleLoginOpen={handleLoginOpen} />
 
             <a href="http://"><img id='cart' className='icon' src={cart} alt="Cart Icon Which Shows Users selected items" /></a>
             </div>
