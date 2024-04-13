@@ -72,3 +72,7 @@
     display: block;
 }
   
+.main-create-account-modal-card .error-message {
+    color: #A6DFFF;
+    padding-top: 15px;
+}

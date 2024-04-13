@@ -45,25 +45,26 @@
 ::placeholder {
     color: #275143;
     font-family: Arial, sans-serif;
-    /* Specify the font-family */
     opacity: 1;
 }
 
 :-ms-input-placeholder {
     color: #275143;
     font-family: Arial, sans-serif;
-    /* Specify the font-family */
 }
 
 ::-ms-input-placeholder {
     color: #275143;
     font-family: Arial, sans-serif;
-    /* Specify the font-family */
 }
 
 .main-login-modal-card .white-link {
     color: white;
     text-decoration-color: white;
     cursor: pointer;
-    /* Explicitly sets the underline color */
+}
+
+.main-login-modal-card .error-message {
+    color: #A6DFFF;
+    padding-top: 15px;
 }

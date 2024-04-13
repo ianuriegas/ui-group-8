@@ -4,11 +4,32 @@ import "../styles/CreateAccountModal.css";
 import logo from "../images/logo.png";
 import { Box, Button, Link, Modal, Stack, TextField, Typography } from "@mui/material";
 export default function CreateAccountModal({ createAccountOpen, handleCreateAccountClose, handleLoginOpen }) {
+    const [showErrorMessage, setShowErrorMessage] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState("")
+
+    const handleCreateAccount = () => {
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const cardInformation = document.getElementById('cardInformation').value;
+        if (!firstName || !lastName || !username | !password) {
+            setErrorMessage("Please fill in all required fields")
+            setShowErrorMessage(true);
+        } else {
+            setShowErrorMessage(false);
+        }
+    };
+
+    const handleCreateAccountCloseAndErrors = () => {
+        setShowErrorMessage(false);
+        handleCreateAccountClose();
+    };  
   return (
     <div>
       <Modal
         open={createAccountOpen}
-        onClose={handleCreateAccountClose}
+        onClose={handleCreateAccountCloseAndErrors}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -27,12 +48,12 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
                 <input type="password" id="password" name="password" placeholder="Password" style={{height: "60px", width: "350px"}} />
             </Stack>
             <br></br>
-            <input type="text" id="cardInformation" name="cardInformation" placeholder="Card Information" style={{height: "60px", width: "749px"}} />
+            <input type="text" id="cardInformation" name="cardInformation" placeholder="Card Information (optional)" style={{height: "60px", width: "749px"}} />
             <br></br>
-            <Link href="#" onClick={() => { handleCreateAccountClose(); handleLoginOpen();}} className="white-link">Already have an account? <br />Log In</Link>
-
-            <br></br>
-            <Button type="button" className="login-button">Create Account</Button>
+            <Link href="#" onClick={() => { handleCreateAccountCloseAndErrors(); handleLoginOpen();}} className="white-link">Already have an account? <br />Log In</Link>
+            { showErrorMessage ? <div><p className="error-message">{errorMessage}</p></div>
+            : <br></br>}
+            <Button type="button" className="login-button" onClick={handleCreateAccount}>Create Account</Button>
           </Stack>
         </Box>
       </Modal>
