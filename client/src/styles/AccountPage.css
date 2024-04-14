@@ -1,0 +1,69 @@
+.account-page-container{
+    width: 100%;
+    min-height: 100vh;
+   
+    display: flex;
+    flex-direction: column;
+    padding: 20px 100px 20px 100px;
+    gap: 40px;
+}
+#account-name{
+    color: #275143;
+    font-weight: bold;
+}
+.personal{
+    height: 20vh;
+    width: 100%;
+    border: 2px #275143 solid;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    padding-top: 20px;
+    background-color: #7E9F94;
+}
+.wishlist ,.favorites,.subscriptions{
+    height: 30vh;
+    width: 100%;
+    border: 2px #275143 solid;
+    border-radius: 10px;
+    background-color: #7E9F94;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+
+.info-container{
+    margin-top: 10px;
+    font-size: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-weight: bold;
+    color: white;
+}
+.sect-headers{
+    font-weight: bold;
+    color: white;
+    font-size: 28px;
+}
+.sub-items-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 80%;
+    margin-top: 16px;
+}
+.header-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.checkbox{
+    height: 15px;
+    width: 15px;
+    vertical-align: text-bottom;
+}
+.check-container{
+    grid-column-start: 5;
+   
+
+}
