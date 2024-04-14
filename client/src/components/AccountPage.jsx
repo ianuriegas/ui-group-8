@@ -4,15 +4,25 @@ import ItemCard1 from './ItemCard1'
 import appleImg from '../images/apples.jpg'
 import cerealImg from '../images/cereal.webp'
 
-function AccountPage() {
+function AccountPage(props) {
   return (
     <div className='account-page-container'>
-        <h1 id='account-name'>Account Name</h1>
+        <h1 id='account-name'>{props.name}</h1>
         <div className="personal">
             <h1 className='sect-headers'>Personal Information</h1>
             <div className="info-container">
-                <div className="address">Address</div>
-                <div className="card-info">Card Information</div>
+                <div className="address-label">Address</div>
+                <div className="address">{props.address}</div>
+                <div className="card-info-label">Card Information</div>
+                <div className="credential-container">
+                    <div className="name-label">Name</div>
+                    <div className="number-label">Card No.</div>
+                    <div className="exp-date-label">Expire Date</div>
+                    <div className="card-name">{props.name}</div>
+                    <div className="card-info">{props.cardnumber}</div>
+                    <div className="exp-date">{props.expiredate}</div>
+
+                </div>
             </div>
         </div>
         <div className="wishlist">

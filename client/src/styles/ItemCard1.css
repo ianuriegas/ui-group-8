@@ -8,9 +8,12 @@
     flex-direction: column;
     align-items: center;
 }
+.link-contain{
+    height: 80%;
+}
 .item-img{
-    height: 120px;
-    width: 120px;
+    height: 90%;
+    width: 130px;
     
    
     
@@ -18,14 +21,16 @@
     
     overflow: hidden;
     border-radius: 10%;
+    object-fit: fill;
 }
 .item-name{
     color: white;
-    margin-top: 8px;
+   
     text-align: center;
     display: -webkit-box;
    -webkit-line-clamp: 2;
     text-overflow: ellipsis;
     overflow: hidden;
+    font-size: 20px;
     
 }

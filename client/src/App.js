@@ -20,7 +20,7 @@ function App() {
       <Navbar />
       <div className="content">
         {/* <HomePage /> */}
-        <AccountPage />
+        <AccountPage name="Keenan Ray" address="323 Burgamy Way, Lands Between" cardnumber="4000-xxxx-xxxx-xxxx" expiredate="4/28"/>
 
 
       </div>

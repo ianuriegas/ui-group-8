@@ -116,4 +116,6 @@ margin-left: 25px;
   button[type="submit"]:hover {
     opacity: 1;
   }/* Search */
-
+.icon:hover{
+    cursor: pointer;
+}
