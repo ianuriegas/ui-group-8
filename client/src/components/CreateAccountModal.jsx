@@ -59,9 +59,8 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
                     discountCode: ""
                 }
               };
-              console.log("User account created", newUser);
               postCreatedUser(newUser)
-              setShowErrorMessage(false);
+              document.cookie = `username=${username};path=/;max-age=60`; // cookie expires in 60 seconds (1 minute)
             }
             
         }
@@ -83,9 +82,9 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
       .then(response => response.json())
       .then(data => {
           console.log("User account created successfully", data);
+          alert("User account created succesfully")
           setShowErrorMessage(false);
           handleCreateAccountClose();
-          alert("User account created succesfully")
       })
       .catch(error => {
           console.error("Error creating user account", error);
