@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import '../styles/Navbar.css'
 import logo from '../images/logo.png'
 import person from '../images/person.png'
@@ -24,7 +25,7 @@ function Navbar() {
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
         <div className="nav-1">
-            <a href="http://"><img id='logo' src={logo} alt="Logo Icon That Directs To Home Page" /></a>
+            <Link to="/"><img id='logo' src={logo} alt="Logo Icon That Directs To Home Page" /></Link>
             <div className="search-box">
             <form>
             <input  type="search" name="" id="search-bar" placeholder='Search...'/>
@@ -46,31 +47,31 @@ function Navbar() {
             </div>
         <div className="nav-2">
             <div className='nav-item'>
-                <a className='none' href="http://">Frozen</a>
+                <Link to="/category/frozen" className='none'>Frozen</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Dairy</a>
+                <Link to="/category/dairy" className='none'>Dairy</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Dry Foods</a>
+                <Link to="/category/dry-foods" className='none'>Dry Foods</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Bakery</a>
+                <Link to="/category/bakery" className='none'>Bakery</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Deli</a>
+                <Link to="/category/deli" className='none'>Deli</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Produce</a>
+                <Link to="/category/produce" className='none'>Produce</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Meat/Poultry</a>
+                <Link to="/category/meat-poultry" className='none'>Meat/Poultry</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Kitchenware</a>
+                <Link to="/category/kitchenware" className='none'>Kitchenware</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Home Essentials</a>
+                <Link to="/category/home-essentials" className='none'>Home Essentials</Link>
             </div>
         </div>
     </div>
