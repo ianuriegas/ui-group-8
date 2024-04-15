@@ -18,8 +18,8 @@
 }
 
 .product-image {
-    width: 100%; /* Set width to 100% of parent container */
-    height: auto; /* Automatically adjust height to maintain aspect ratio */
-    max-width: 350px; /* Maximum width to prevent image from stretching too wide */
+    width: 100%;
+    height: auto;
+    max-width: 350px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

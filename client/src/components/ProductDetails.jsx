@@ -30,7 +30,7 @@ function ProductDetails() {
       {filteredProduct ? (
         <>
           <div className="left-container">
-            <img src={`/products/${filteredProduct.productImage}`} alt={filteredProduct.productImage} className="product-image" />
+            <div className='product-image'><img src={`/products/${filteredProduct.productImage}`} alt={filteredProduct.productImage} className="product-image" /></div>
             <p>Description: {filteredProduct.description}</p>
           </div>
           <div className="right-container">
