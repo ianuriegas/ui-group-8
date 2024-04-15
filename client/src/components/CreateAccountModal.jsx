@@ -6,6 +6,15 @@ import { Box, Button, Link, Modal, Stack, TextField, Typography } from "@mui/mat
 export default function CreateAccountModal({ createAccountOpen, handleCreateAccountClose, handleLoginOpen }) {
     const [showErrorMessage, setShowErrorMessage] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState("")
+    const [userData, setUserData] = React.useState("")
+
+    React.useEffect(() => {
+      fetch("/getUsers")
+        .then((response) => response.json())
+        .then((data) => {
+          setUserData(data);
+        });
+    }, []);
 
     const handleCreateAccount = () => {
         const firstName = document.getElementById('firstName').value;
@@ -18,14 +27,72 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
             setErrorMessage("Please fill in all required fields")
             setShowErrorMessage(true);
         } else {
-            setShowErrorMessage(false);
+            const checkedUsername = userData.find(u => u.username === username);
+            // username is already in the db
+            if (checkedUsername) {
+              setErrorMessage("Username already taken")
+              setShowErrorMessage(true);
+            } else {
+              const newUser = {
+                firstName: firstName,
+                lastName: lastName,
+                username: username,
+                email: email,
+                password: password,
+                address: {},
+                paymentInfo: cardInformation ? {
+                    cardType: "",
+                    cardNumber: cardInformation,
+                    expireDate: "",
+                    cvv: ""
+                } : {
+                    cardType: "",
+                    cardNumber: "",
+                    expireDate: "",
+                    cvv: ""
+                },
+                wishlist: { productIds: [] },
+                favorites: { productIds: [] },
+                subscriptions: { productIds: [] },
+                cart: {
+                    items: [],
+                    discountCode: ""
+                }
+              };
+              console.log("User account created", newUser);
+              postCreatedUser(newUser)
+              setShowErrorMessage(false);
+            }
+            
         }
     };
 
     const handleCreateAccountCloseAndErrors = () => {
         setShowErrorMessage(false);
         handleCreateAccountClose();
-    };  
+    };
+
+    const postCreatedUser = (newUser) => {
+      fetch("/createUser", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newUser)
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log("User account created successfully", data);
+          setShowErrorMessage(false);
+          handleCreateAccountClose();
+          alert("User account created succesfully")
+      })
+      .catch(error => {
+          console.error("Error creating user account", error);
+          setErrorMessage("Failed to create account. Please try again.");
+          setShowErrorMessage(true);
+      });
+    }
   return (
     <div>
       <Modal

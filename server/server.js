@@ -2,8 +2,9 @@ const express = require("express");
 const { MongoClient } = require("mongodb");
 const app = express();
 
-const uri = "mongodb+srv://temp:temp1234@ui-group-8.migbrji.mongodb.net/";
+app.use(express.json());
 
+const uri = "mongodb+srv://temp:temp1234@ui-group-8.migbrji.mongodb.net/";
 const client = new MongoClient(uri);
 
 //Function To Sort Items By Category
@@ -86,6 +87,22 @@ app.get("/getUsers", async (req, res) => {
     const products = database.collection("users");
     const productsList = await products.find({}).toArray();
     res.json(productsList);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  } finally {
+    await client.close();
+  }
+});
+
+app.post("/createUser", async (req, res) => {
+  try {
+    await client.connect();
+    const database = client.db("group_8_db");
+    const users = database.collection("users");
+
+    // Insert the new user data from request body
+    const result = await users.insertOne(req.body);
+    res.status(201).json(result);
   } catch (e) {
     res.status(500).json({ error: e.message });
   } finally {
