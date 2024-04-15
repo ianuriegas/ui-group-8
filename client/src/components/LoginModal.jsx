@@ -6,6 +6,15 @@ import { Box, Button, Link, Modal, Stack, Typography } from "@mui/material";
 export default function LoginModal({ loginOpen, handleLoginClose, handleCreateAccountOpen, handleForgotPasswordOpen }) {
   const [showErrorMessage, setShowErrorMessage] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("")
+  const [userData, setUserData] = React.useState("")
+  
+  React.useEffect(() => {
+    fetch("/getUsers")
+      .then((response) => response.json())
+      .then((data) => {
+        setUserData(data);
+      });
+  }, []);
 
   const handleLogin = () => {
     const username = document.getElementById('username').value;
@@ -15,7 +24,15 @@ export default function LoginModal({ loginOpen, handleLoginClose, handleCreateAc
       setErrorMessage("Incorrect username or password")
       setShowErrorMessage(true);
     } else {
-      setShowErrorMessage(false);
+      const user = userData.find(u => u.username === username && u.password === password);
+      // succesful login (username and password found in db)
+      if (user) {
+        console.log("Found a match");
+        setShowErrorMessage(false);
+      } else {
+        setErrorMessage("Incorrect username or password");
+        setShowErrorMessage(true);
+      }
     }
   };
 
