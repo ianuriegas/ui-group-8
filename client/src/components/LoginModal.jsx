@@ -32,6 +32,7 @@ export default function LoginModal({ loginOpen, handleLoginClose, handleCreateAc
         setShowErrorMessage(false);
         handleLoginClose();
         alert("Sucessfully logged in!");
+        window.location.reload();
       } else {
         setErrorMessage("Incorrect username or password");
         setShowErrorMessage(true);

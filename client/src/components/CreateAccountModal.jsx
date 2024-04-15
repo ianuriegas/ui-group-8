@@ -61,6 +61,7 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
               };
               postCreatedUser(newUser)
               document.cookie = `username=${username};path=/;max-age=600`; // cookie expires in 600 seconds (10 minutes)
+              window.location.reload();
             }
             
         }
