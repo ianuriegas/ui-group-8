@@ -36,7 +36,7 @@ function handleSignOut(username, setUsername) {
     document.cookie = `username=${username}; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
     setUsername('');
     alert("Sucessfully logged out!");
-    window.location.reload();
+    window.location.href = '/';
 }
 
 function Navbar() {
