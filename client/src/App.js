@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import HomePage from "./components/HomePage";
 import Footer from "./components/Footer";
+import AccountPage from "./components/AccountPage";
 
 function App() {
   const [backendData, setBackendData] = useState([{}]);
@@ -18,7 +19,9 @@ function App() {
     <div className="app">
       <Navbar />
       <div className="content">
-        <HomePage />
+        {/* <HomePage /> */}
+        <AccountPage name="Keenan Ray" address="323 Burgamy Way, Lands Between" cardnumber="4000-xxxx-xxxx-xxxx" expiredate="4/28"/>
+
 
       </div>
       <Footer />
