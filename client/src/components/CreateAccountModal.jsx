@@ -12,8 +12,9 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
         const lastName = document.getElementById('lastName').value;
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
         const cardInformation = document.getElementById('cardInformation').value;
-        if (!firstName || !lastName || !username | !password) {
+        if (!firstName || !lastName || !username || !password || !email) {
             setErrorMessage("Please fill in all required fields")
             setShowErrorMessage(true);
         } else {
@@ -48,7 +49,10 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
                 <input type="password" id="password" name="password" placeholder="Password" style={{height: "60px", width: "350px"}} />
             </Stack>
             <br></br>
-            <input type="text" id="cardInformation" name="cardInformation" placeholder="Card Information (optional)" style={{height: "60px", width: "749px"}} />
+            <Stack direction={"row"} spacing={6}>
+                <input type="text" id="email" name="email" placeholder="Email" style={{height: "60px", width: "350px"}} />
+                <input type="text" id="cardInformation" name="cardInformation" placeholder="Card Information (optional)" style={{height: "60px", width: "350px"}} />
+            </Stack>
             <br></br>
             <Link href="#" onClick={() => { handleCreateAccountCloseAndErrors(); handleLoginOpen();}} className="white-link">Already have an account? <br />Log In</Link>
             { showErrorMessage ? <div><p className="error-message">{errorMessage}</p></div>
