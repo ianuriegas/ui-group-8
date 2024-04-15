@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { VirtualList } from 'react-virtualized';
+import { useParams, Link } from 'react-router-dom';
 import "../styles/Category.css"
 
 // mapping for category display names
@@ -109,11 +108,13 @@ function Category() {
                 <h1 className='category-header'>{getDisplayName(categoryName)}</h1>
                 <div className="product-row">
                 {filteredProducts.map((product) => (
-                    <div key={product._id} className="product-container">
-                    <img src={`/products/${product.productImage}`} alt={product.productImage} className="product-image" />
-                    <p className="product-name">{product.productName}</p>
-                    <p className="product-price">${formatPrice(product.price)}</p>
-                    </div>
+                    <Link key={product._id} to={`/product/${product._id}`} className="none">
+                        <div className="product-container">
+                            <img src={`/products/${product.productImage}`} alt={product.productImage} className="product-image" />
+                            <p className="product-name">{product.productName}</p>
+                            <p className="product-price">${formatPrice(product.price)}</p>
+                        </div>
+                    </Link>
                 ))}
                 </div>
             </div>

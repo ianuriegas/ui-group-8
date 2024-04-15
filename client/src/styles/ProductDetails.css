@@ -1,0 +1,25 @@
+.details-container {
+    display: grid;
+    grid-template-columns: minmax(150px, 50%) 1fr;
+    grid-gap: 1rem;
+    margin: 0 auto;
+    width: 100vw;
+    height: 85vh;
+    padding: 1rem;
+    overflow: auto;
+}
+
+.left-container {
+    padding: 15px;
+}
+
+.right-container {
+    padding: 15px;
+}
+
+.product-image {
+    width: 100%; /* Set width to 100% of parent container */
+    height: auto; /* Automatically adjust height to maintain aspect ratio */
+    max-width: 350px; /* Maximum width to prevent image from stretching too wide */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

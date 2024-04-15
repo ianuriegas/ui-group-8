@@ -1,3 +1,15 @@
+.none{
+    text-decoration: none;
+    color: #FFF5D3;
+    font-weight: bold;
+    text-align: center;
+
+}
+
+.none:hover{
+    font-size: 15px;
+}
+
 .divider-container {
     display: flex;
     justify-content: center;
@@ -120,28 +132,29 @@
     justify-content: center;
   }
   
-  .product-container {
+.product-container {
     text-align: center;
     margin: 20px;
     width: 200px;
     padding: 20px;
     position: relative;
-  }
-  
-  .product-image {
+}
+
+.product-image {
     width: 60%;
     height: auto;
-  }
-  
-  .product-name {
+}
+
+.product-name {
     margin-top: 10px;
     font-weight: bold;
+    font-size: 15px;
     color: #275143;
-  }
-  
-  .product-price {
+}
+
+.product-price {
     margin-top: 5px;
     color: #2875A0;
     font-weight: bold;
     font-size: 20px;
-  }
+}

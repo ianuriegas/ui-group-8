@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import HomePage from "./components/HomePage";
 import Footer from "./components/Footer";
 import Category from "./components/Category";
+import ProductDetails from "./components/ProductDetails";
 
 function App() {
   const [backendData, setBackendData] = useState([{}]);
@@ -24,6 +25,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/category/:categoryName" element={<Category />} /> 
+            <Route path="/product/:productId" element={<ProductDetails />} /> 
           </Routes>
         </div>
       
