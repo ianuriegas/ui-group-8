@@ -1,0 +1,120 @@
+.cart-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  
+  .review-cart{
+    padding: 20px;
+    width: 45%;
+  }
+
+  .order-summary{
+    padding: 2%;
+    width: 22%;
+    border: 1px solid #C7C7C7;
+    border-radius: 5%;
+  }
+  
+  .review-cart h2, .order-summary h2 {
+    margin-bottom: 20px;
+    font-weight: 800;
+    color: #153027;
+  }
+  
+  .cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .cart-item img {
+    width: 20%;
+    height: auto;
+  }
+
+  .name-price{
+    display: block;
+    align-items: start;
+    font-size: large;
+  }
+
+  .name {
+    font-size: 110%;
+    color: #275143;
+    font-weight: bold;
+    margin-top: 10%;
+    margin-bottom: 0;
+    
+  }
+
+  .price {
+    color: #2875A0;
+    font-size: 140%;
+    font-weight: bolder;
+  }
+  
+  .quantity-selector {
+    margin-top: 3%;
+    margin-left: 40%;
+    display: flex;
+    align-items: center;
+  }
+
+  .quantity-selector p{
+    font-weight: bolder;
+    font-size: 110%;
+  }
+  
+  .quantity-selector button {
+    margin: 0 5px;
+    margin-bottom: 20px;
+    padding: 5% 0% 5% 0%;
+    font-weight: bolder;
+    font-size: 110%;
+    border: 1px solid #C7C7C7;
+    border-radius: 15%;
+  }
+
+  .delivery-pickup-toggle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5%;
+  }
+  
+  .delivery-pickup-toggle p {
+    padding: 1% 10% 1% 10%;
+    border: 1px solid #707070;
+    border-radius: 38px;
+    cursor: pointer;
+    color: #1E1E1E;
+    font-size: 150%;
+    font-weight: 700;
+  }
+  
+  .delivery-pickup-toggle-selected p{
+    padding: 1% 10% 1% 10%;
+    border-radius: 38px;
+    cursor: pointer;
+    font-size: 150%;
+    font-weight: 700;
+    background-color: #4CAF50;
+    border: 1px solid #4CAF50;
+    color: white;
+  }
+  
+  .checkout-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #A6DFFF;
+    color: #2875A0;
+    font-weight: 1000;
+    font-size: 200%;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  
