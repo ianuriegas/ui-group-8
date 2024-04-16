@@ -6,25 +6,93 @@ import { Box, Button, Link, Modal, Stack, TextField, Typography } from "@mui/mat
 export default function CreateAccountModal({ createAccountOpen, handleCreateAccountClose, handleLoginOpen }) {
     const [showErrorMessage, setShowErrorMessage] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState("")
+    const [userData, setUserData] = React.useState("")
+
+    React.useEffect(() => {
+      fetch("/getUsers")
+        .then((response) => response.json())
+        .then((data) => {
+          setUserData(data);
+        });
+    }, []);
 
     const handleCreateAccount = () => {
         const firstName = document.getElementById('firstName').value;
         const lastName = document.getElementById('lastName').value;
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
         const cardInformation = document.getElementById('cardInformation').value;
-        if (!firstName || !lastName || !username | !password) {
+        if (!firstName || !lastName || !username || !password || !email) {
             setErrorMessage("Please fill in all required fields")
             setShowErrorMessage(true);
         } else {
-            setShowErrorMessage(false);
+            const checkedUsername = userData.find(u => u.username === username);
+            // username is already in the db
+            if (checkedUsername) {
+              setErrorMessage("Username already taken")
+              setShowErrorMessage(true);
+            } else {
+              const newUser = {
+                firstName: firstName,
+                lastName: lastName,
+                username: username,
+                email: email,
+                password: password,
+                address: {},
+                paymentInfo: cardInformation ? {
+                    cardType: "",
+                    cardNumber: cardInformation,
+                    expireDate: "",
+                    cvv: ""
+                } : {
+                    cardType: "",
+                    cardNumber: "",
+                    expireDate: "",
+                    cvv: ""
+                },
+                wishlist: { productIds: [] },
+                favorites: { productIds: [] },
+                subscriptions: { productIds: [] },
+                cart: {
+                    items: [],
+                    discountCode: ""
+                }
+              };
+              postCreatedUser(newUser)
+              document.cookie = `username=${username};path=/;max-age=600`; // cookie expires in 600 seconds (10 minutes)
+              window.location.reload();
+            }
+            
         }
     };
 
     const handleCreateAccountCloseAndErrors = () => {
         setShowErrorMessage(false);
         handleCreateAccountClose();
-    };  
+    };
+
+    const postCreatedUser = (newUser) => {
+      fetch("/createUser", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newUser)
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log("User account created successfully", data);
+          alert("User account created succesfully")
+          setShowErrorMessage(false);
+          handleCreateAccountClose();
+      })
+      .catch(error => {
+          console.error("Error creating user account", error);
+          setErrorMessage("Failed to create account. Please try again.");
+          setShowErrorMessage(true);
+      });
+    }
   return (
     <div>
       <Modal
@@ -48,7 +116,10 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
                 <input type="password" id="password" name="password" placeholder="Password" style={{height: "60px", width: "350px"}} />
             </Stack>
             <br></br>
-            <input type="text" id="cardInformation" name="cardInformation" placeholder="Card Information (optional)" style={{height: "60px", width: "749px"}} />
+            <Stack direction={"row"} spacing={6}>
+                <input type="text" id="email" name="email" placeholder="Email" style={{height: "60px", width: "350px"}} />
+                <input type="text" id="cardInformation" name="cardInformation" placeholder="Card Information (optional)" style={{height: "60px", width: "350px"}} />
+            </Stack>
             <br></br>
             <Link href="#" onClick={() => { handleCreateAccountCloseAndErrors(); handleLoginOpen();}} className="white-link">Already have an account? <br />Log In</Link>
             { showErrorMessage ? <div><p className="error-message">{errorMessage}</p></div>

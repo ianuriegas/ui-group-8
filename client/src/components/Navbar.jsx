@@ -7,6 +7,38 @@ import cart from '../images/cart.png'
 import LoginModal from './LoginModal'
 import CreateAccountModal from './CreateAccountModal'
 import ForgotPasswordModal from './ForgotPasswordModal'
+import MenuIcon from '@mui/icons-material/Menu';
+
+function getCookie(name) {
+    const cookieString = document.cookie;
+
+    // no cookies return null
+    if (!cookieString) {
+      return null;
+    }
+    
+    // split cookie into arr
+    let cookieArray = cookieString.split(';');
+    for (let cookie of cookieArray) {
+      let parts = cookie.split('=');
+      if (parts.length === 2) {
+        let key = parts[0].trim();
+        let value = parts[1].trim();
+        if (key === name) {
+          return value;
+        }
+      }
+    }
+    // return null if cookie with 'name' not found
+    return null;
+}
+  
+function handleSignOut(username, setUsername) {
+    document.cookie = `username=${username}; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+    setUsername('');
+    alert("Sucessfully logged out!");
+    window.location.href = '/';
+}
 
 function Navbar() {
   const [loginOpen, setLoginOpen] = React.useState(false);
@@ -19,6 +51,16 @@ function Navbar() {
   const handleCreateAccountClose = () => setCreateAccountOpen(false);
   const handleForgotPasswordOpen = () => setForgotPasswordOpen(true);
   const handleForgotPasswordClose = () => setForgotPasswordOpen(false);
+
+  const [username, setUsername] = React.useState('');
+  
+  // get username from cookie   
+  React.useEffect(() => {
+    const user = getCookie('username');
+    if (user) {
+      setUsername(user);
+    }
+  }, []);
 
   return (
     <div className='nav-container'>
@@ -34,12 +76,19 @@ function Navbar() {
 
             </div>
             <div className='icon-group'>
-
-            <a onClick={handleLoginOpen}><img  className='icon' src={person} alt="Profile Icon That Allows User To Sign Up Or Log in" /></a>
-            <LoginModal loginOpen={loginOpen} handleLoginClose={handleLoginClose} handleCreateAccountOpen={handleCreateAccountOpen} handleForgotPasswordOpen={handleForgotPasswordOpen}  />
-            <CreateAccountModal createAccountOpen={createAccountOpen} handleCreateAccountClose={handleCreateAccountClose} handleLoginOpen={handleLoginOpen} />
-            <ForgotPasswordModal forgotPasswordOpen={forgotPasswordOpen} handleForgotPasswordClose={handleForgotPasswordClose} handleLoginOpen={handleLoginOpen} />
-
+            {username ?
+            <div class="dropdown">
+                <button class="dropbtn"><MenuIcon style={{height: "40px", width: "40px"}} /></button>
+                <div class="dropdown-content">
+                    <a href="#">Account Page</a>
+                    <a onClick={() => handleSignOut(username, setUsername)}>Sign Out</a>
+                </div>
+            </div> : <div>
+                <a onClick={handleLoginOpen}><img  className='icon' src={person} alt="Profile Icon That Allows User To Sign Up Or Log in" /></a>
+                <LoginModal loginOpen={loginOpen} handleLoginClose={handleLoginClose} handleCreateAccountOpen={handleCreateAccountOpen} handleForgotPasswordOpen={handleForgotPasswordOpen}  />
+                <CreateAccountModal createAccountOpen={createAccountOpen} handleCreateAccountClose={handleCreateAccountClose} handleLoginOpen={handleLoginOpen} />
+                <ForgotPasswordModal forgotPasswordOpen={forgotPasswordOpen} handleForgotPasswordClose={handleForgotPasswordClose} handleLoginOpen={handleLoginOpen} />
+            </div> }
             <a href="http://"><img id='cart' className='icon' src={cart} alt="Cart Icon Which Shows Users selected items" /></a>
             </div>
 

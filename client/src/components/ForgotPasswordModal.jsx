@@ -6,7 +6,16 @@ import { Box, Button, Link, Modal, Stack, Typography } from "@mui/material";
 export default function ForgotPasswordModal({ forgotPasswordOpen, handleForgotPasswordClose, handleLoginOpen }) {
   const [showErrorMessage, setShowErrorMessage] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("")
-  
+  const [userData, setUserData] = React.useState("")
+
+  React.useEffect(() => {
+    fetch("/getUsers")
+      .then((response) => response.json())
+      .then((data) => {
+        setUserData(data);
+      });
+  }, []);
+
   const handleForgotPassword = () => {
     const email = document.getElementById('email').value;
 
@@ -14,7 +23,15 @@ export default function ForgotPasswordModal({ forgotPasswordOpen, handleForgotPa
       setErrorMessage("Please enter email")
       setShowErrorMessage(true);
     } else {
-      setShowErrorMessage(false);
+      const checkedEmail = userData.find(u => u.email === email);
+      if (checkedEmail) {
+        setShowErrorMessage(false);
+        handleForgotPasswordClose();
+        alert("Email sent! Check you inbox for instructions on how to reset your password.")
+      } else{
+        setErrorMessage("Email is not registered with an account")
+        setShowErrorMessage(true);
+      }
     }
   };
 

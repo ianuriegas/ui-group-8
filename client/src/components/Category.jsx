@@ -110,9 +110,9 @@ function Category() {
                 {filteredProducts.map((product) => (
                     <Link key={product._id} to={`/product/${product._id}`} className="none">
                         <div className="product-container">
-                            <img src={`/products/${product.productImage}`} alt={product.productImage} className="product-image" />
-                            <p className="product-name">{product.productName}</p>
-                            <p className="product-price">${formatPrice(product.price)}</p>
+                            <img src={`/products/${product.productImage}`} alt={product.productImage} className="product-image-cat" />
+                            <p className="product-name-cat">{product.productName}</p>
+                            <p className="product-price-cat">${formatPrice(product.price)}</p>
                         </div>
                     </Link>
                 ))}

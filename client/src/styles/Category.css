@@ -140,19 +140,19 @@
     position: relative;
 }
 
-.product-image {
+.product-image-cat {
     width: 60%;
     height: auto;
 }
 
-.product-name {
+.product-name-cat {
     margin-top: 10px;
     font-weight: bold;
     font-size: 15px;
     color: #275143;
 }
 
-.product-price {
+.product-price-cat {
     margin-top: 5px;
     color: #2875A0;
     font-weight: bold;

@@ -133,7 +133,7 @@
     margin-bottom: 10px;
 }
 
-.item-name {
+.item-name-det {
     color: #275143;
     font-size: 30px;
     font-weight: bold;
@@ -185,7 +185,7 @@
     min-width: 415px;
 }
 
-.item-price {
+.item-price-det {
     color: #2875A0;
     font-size: 35px;
     font-weight: bold;
@@ -199,7 +199,7 @@
     height: 50px;
 }
   
-.quantity-button {
+.quantity-button-det {
     background-color: #ffffff; /* Button background color */
     border: 1px solid #cccccc; /* Button border */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -208,7 +208,7 @@
     margin-bottom: 15px;
 }
   
-.quantity {
+.quantity-det {
     padding: 30px;
     font-size: 35px; /* Font size for the quantity */
     margin-bottom: 18px;
@@ -226,6 +226,16 @@
     margin-top: 10px;
 }
 
+.add-to-cart-button:hover {
+    background-color: #87CEFA; /* Change background color on hover */
+    color: #2875A0; /* Change text color on hover */
+}
+  
+.add-to-cart-button:active {
+    transform: translateY(2px); /* Add a slight downward movement when clicked */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Adjust box shadow when clicked */
+}
+
 .create-subscription-button {
     min-width: 415px;
     border-radius: 10px; 
@@ -237,6 +247,16 @@
     margin-top: 20px;
 }
 
+.create-subscription-button:hover {
+    background-color: #ffd335; /* Change background color on hover */
+    color: #86722A; /* Change text color on hover */
+}
+  
+.create-subscription-button:active {
+    transform: translateY(2px); /* Add a slight downward movement when clicked */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Adjust box shadow when clicked */
+}
+
 .add-to-wishlist-button {
     min-width: 415px;
     border-radius: 10px; 
@@ -246,4 +266,14 @@
     font-size: 30px;
     font-weight: bold;
     margin-top: 20px;
+}
+
+.add-to-wishlist-button:hover {
+    background-color: #e06425; /* Change background color on hover */
+    color: #733618; /* Change text color on hover */
+}
+  
+.add-to-wishlist-button:active {
+    transform: translateY(2px); /* Add a slight downward movement when clicked */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Adjust box shadow when clicked */
 }

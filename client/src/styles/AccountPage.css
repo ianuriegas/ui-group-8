@@ -1,0 +1,124 @@
+.account-page-container{
+    width: 100%;
+    min-height: 100vh;
+   
+    display: flex;
+    flex-direction: column;
+    padding: 20px 100px 20px 100px;
+    gap: 40px;
+}
+#account-name{
+    color: #275143;
+    font-weight: bold;
+}
+.personal{
+    height: 28vh;
+    width: 100%;
+    border: 2px #275143 solid;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    padding-top: 20px;
+    background-color: #7E9F94;
+}
+.wishlist ,.favorites,.subscriptions{
+    height: 30vh;
+    width: 100%;
+    border: 2px #275143 solid;
+    border-radius: 10px;
+    background-color: #7E9F94;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+
+.info-container{
+    margin-top: 10px;
+    font-size: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    font-weight: bold;
+    color: white;
+}
+.address-label,.address{
+    grid-column-start: 1;
+}
+.address-label{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+.card-info-label{
+    grid-column-start: 2;
+    grid-column-end: 3;  
+    display: flex;
+    flex-direction: row;
+}
+.credential-container{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 4;
+
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    
+}
+.name-label,.number-label,.exp-date-label{
+    grid-column-start: 1;
+}
+.card-name,.card-info,.exp-date{
+    grid-column-start: 2;
+}
+.card-name{
+    grid-row-start: 1;
+}
+.exp-date{
+    grid-row-start: 3;
+}
+.address{
+grid-row-start: 2;
+font-weight: lighter;
+}
+.card-info{
+    grid-row-start: 2;
+}
+.sect-headers{
+    font-weight: bold;
+    color: white;
+    font-size: 32px;
+}
+.sub-items-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 80%;
+    margin-top: 16px;
+    gap: 40px;
+}
+.header-row{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+label{
+    font-size: 22px;
+    color: #275143;
+}
+.checkbox{
+    height: 25px;
+    width: 25px;
+    vertical-align: text-bottom;
+}
+.check-container{
+    grid-column-start: 5;
+   
+
+}
+.edit{
+    margin-left: 25px;
+    width: 20px;
+    height: 20px;
+}
