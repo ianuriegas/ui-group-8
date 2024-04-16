@@ -8,6 +8,7 @@ function ProductDetails() {
   const [products, setProducts] = useState([]);
   const [showNutritionFacts, setShowNutritionFacts] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [isFilledHeart, setIsFilledHeart] = useState(false);
 
   // fetch products from db
   useEffect(() => {
@@ -36,7 +37,7 @@ function ProductDetails() {
     }
   };
 
-  // add to cart section
+  // get user based off cookie
   function getCookie(name) {
     const cookieString = document.cookie;
     const cookies = cookieString.split('; ').reduce((acc, cookie) => {
@@ -47,7 +48,7 @@ function ProductDetails() {
     return cookies[name];
   }
   const username = getCookie('username');
-
+  // add to cart section
   const handleAddToCart = async () => {
     if (!username) {
       alert('Please sign in to add items to your cart.');
@@ -74,10 +75,10 @@ function ProductDetails() {
       alert('Failed to add item to cart. Please try again.');
     }
   };
-
+  // add to subscription section
   const handleAddToSub = async () => {
     if (!username) {
-      alert('Please sign in to add items to your cart.');
+      alert('Please sign in to add items to your subscriptions.');
       return;
     }
 
@@ -100,10 +101,10 @@ function ProductDetails() {
       alert('Failed to add item to cart. Please try again.');
     }
   };
-
+  // add to wishlist section
   const handleAddToWish = async () => {
     if (!username) {
-      alert('Please sign in to add items to your cart.');
+      alert('Please sign in to add items to your wishlist.');
       return;
     }
 
@@ -121,6 +122,35 @@ function ProductDetails() {
         body: JSON.stringify(wishItem)
       });
       
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+      alert('Failed to add item to cart. Please try again.');
+    }
+  };
+  // add to favorites section
+  const handleAddToFav = async () => {
+    
+    if (!username) {
+      alert('Please sign in to add items to your favorites.');
+      return;
+    } else {
+      setIsFilledHeart(!isFilledHeart);
+    }
+
+    const favItem = {
+      username,
+      productId: filteredProduct._id,
+    };
+
+    try {
+      const endpoint = isFilledHeart ? '/removeFromFavorites' : '/addToFavorites';
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(favItem)
+      });
     } catch (error) {
       console.error('Error adding product to cart:', error);
       alert('Failed to add item to cart. Please try again.');
@@ -155,7 +185,12 @@ function ProductDetails() {
             <div className='right-content'>
               <div className='product-name-container'><h1 className='item-name-det'>{filteredProduct.productName}</h1></div>
               <div className="product-divider-container"><hr className="product-divider"/></div>
-              <div className='shelf-life-container'><p className='shelf-life'>Shelf life: {filteredProduct.shelfLife}</p></div>
+              <div className='shelf-life-container'>
+                <div><p className='shelf-life'>Shelf life: {filteredProduct.shelfLife}</p></div>
+                <button onClick={handleAddToFav} className={`favorites-button ${isFilledHeart ? 'fa fa-heart' : 'fa fa-heart-o'}`} style={{ color: '#E2743E' , fontSize:'30px'}}>
+                  <i className="fa"></i>
+                </button>
+              </div>
               <div className='item-price-container'>
                 <p className='item-price-det'>${filteredProduct.price}</p>
                 <div className="quantity-container">
@@ -176,7 +211,7 @@ function ProductDetails() {
           </div>
         </>
       ) : (
-        <p>Loading...</p> // Handle case where product is not found
+        <p>Loading...</p> // Handle case for buffer
       )}
     </div>
   );

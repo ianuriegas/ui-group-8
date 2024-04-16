@@ -215,6 +215,76 @@ app.post('/addToWishlist', async (req, res) => {
   }
 });
 
+app.post('/addToFavorites', async (req, res) => {
+  try {
+    const { username, productId } = req.body;
+
+    if (!username || !productId) {
+      return res.status(400).json({ error: 'Missing required fields.' });
+    }
+
+    await client.connect();
+    const database = client.db("group_8_db");
+    const users = database.collection("users");
+
+    const user = await users.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    const updatedUser = await users.findOneAndUpdate(
+      { username },
+      {
+        $push: {
+          'favorites.productIds': productId
+        }
+      },
+      { returnOriginal: false }
+    );
+  } catch (error) {
+    console.error('Error adding product to cart:', error);
+    res.status(500).json({ error: 'Failed to add product to cart.' });
+  } finally {
+    await client.close();
+  }
+});
+
+app.post('/removeFromFavorites', async (req, res) => {
+  try {
+    const { username, productId } = req.body;
+
+    if (!username || !productId) {
+      return res.status(400).json({ error: 'Missing required fields.' });
+    }
+
+    await client.connect();
+    const database = client.db("group_8_db");
+    const users = database.collection("users");
+
+    const user = await users.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    const updatedUser = await users.findOneAndUpdate(
+      { username },
+      {
+        $pull: {
+          'favorites.productIds': productId
+        }
+      },
+      { returnOriginal: false }
+    );
+  } catch (error) {
+    console.error('Error adding product to cart:', error);
+    res.status(500).json({ error: 'Failed to add product to cart.' });
+  } finally {
+    await client.close();
+  }
+});
+
 app.listen(5001, () => {
   console.log("Server started on port 5001");
 });
