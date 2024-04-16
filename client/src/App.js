@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Cart from './components/Cart';
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import AccountPage from "./components/AccountPage";
 
 function App() {
   const [backendData, setBackendData] = useState([{}]);
@@ -25,9 +26,9 @@ function App() {
           <Routes>
             <Route exact path="/" element={<HomePage/>} />
             <Route path="/cart" element={<Cart/>} />
+            <Route path="/account" element={<AccountPage name="Keenan Ray" address="323 Burgamy Way, Lands Between" cardnumber="4000-xxxx-xxxx-xxxx" expiredate="4/28"/>} />
             {/* Add other routes here */}
           </Routes>
-
         </div>
         <Footer />
 
