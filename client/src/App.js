@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import HomePage from "./components/HomePage";
+// import HomePage from "./components/HomePage";
 import Footer from "./components/Footer";
+import Cart from './components/Cart';
 
 function App() {
   const [backendData, setBackendData] = useState([{}]);
@@ -18,7 +19,7 @@ function App() {
     <div className="app">
       <Navbar />
       <div className="content">
-        <HomePage />
+        <Cart />
 
       </div>
       <Footer />
