@@ -3,17 +3,26 @@ import '../styles/AccountPage.css'
 import ItemCard1 from './ItemCard1'
 import appleImg from '../images/apples.jpg'
 import cerealImg from '../images/cereal.webp'
+import pencil from '../images/pencil.png'
 
 function AccountPage(props) {
+    
   return (
     <div className='account-page-container'>
         <h1 id='account-name'>{props.name}</h1>
         <div className="personal">
             <h1 className='sect-headers'>Personal Information</h1>
             <div className="info-container">
-                <div className="address-label">Address</div>
+                <div className="address-label">
+                    <h3>Address</h3>
+                    <button className='edit' type='image'><img src={pencil} alt="edit icon" /></button>
+                    
+                </div>
                 <div className="address">{props.address}</div>
-                <div className="card-info-label">Card Information</div>
+                <div className="card-info-label">
+                    <h3>Card Information</h3>
+                    <button className='edit' type='image'><img src={pencil} alt="edit icon" /></button>
+                </div>
                 <div className="credential-container">
                     <div className="name-label">Name</div>
                     <div className="number-label">Card No.</div>
@@ -69,7 +78,7 @@ function AccountPage(props) {
         
         <div className="subscriptions">
         <div className="header-row">
-            <div className="sect-headers">Wishlist</div>
+            <div className="sect-headers">Subscriptions</div>
             <form className='check-container'>
                 <div >
                     <label>
