@@ -6,6 +6,7 @@ import cart from '../images/cart.png'
 import LoginModal from './LoginModal'
 import CreateAccountModal from './CreateAccountModal'
 import ForgotPasswordModal from './ForgotPasswordModal'
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   const [loginOpen, setLoginOpen] = React.useState(false);
@@ -39,7 +40,7 @@ function Navbar() {
             <CreateAccountModal createAccountOpen={createAccountOpen} handleCreateAccountClose={handleCreateAccountClose} handleLoginOpen={handleLoginOpen} />
             <ForgotPasswordModal forgotPasswordOpen={forgotPasswordOpen} handleForgotPasswordClose={handleForgotPasswordClose} handleLoginOpen={handleLoginOpen} />
 
-            <a href="http://"><img id='cart' className='icon' src={cart} alt="Cart Icon Which Shows Users selected items" /></a>
+            <Link to="/cart"><img id='cart' className='icon' src={cart} alt="Cart Icon Which Shows Users selected items" /></Link>
             </div>
 
 
