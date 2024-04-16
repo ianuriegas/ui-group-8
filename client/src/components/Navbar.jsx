@@ -9,7 +9,7 @@ import ForgotPasswordModal from './ForgotPasswordModal'
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function getCookie(name) {
+export function getCookie(name) {
     const cookieString = document.cookie;
 
     // no cookies return null
