@@ -58,9 +58,9 @@ export default function LoginModal({ loginOpen, handleLoginClose, handleCreateAc
             <img id="modal-logo" src={logo} />
             <Typography className="modal-text">Log In</Typography>
             <br></br>
-            <input type="text" id="username" name="username" placeholder="Username" style={{height: "60px", width: "350px"}} />
+            <input type="text" id="username" name="username" placeholder="Username" style={{height: "60px", width: "350px", paddingLeft: "10px", color: "black"}} />
             <br></br>
-            <input type="password" id="password" name="password" placeholder="Password" style={{height: "60px", width: "350px"}} />
+            <input type="password" id="password" name="password" placeholder="Password" style={{height: "60px", width: "350px", paddingLeft: "10px", color: "black"}} />
             <br></br>
             <Stack direction={"row"} sx={{ width: '65%', justifyContent: 'space-between' }} className="stack-row">
                 <Link onClick={() => { handleLoginCloseAndErrors(); handleForgotPasswordOpen();}} className="white-link">Forgot Password</Link>

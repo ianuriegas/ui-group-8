@@ -80,7 +80,7 @@ function Navbar() {
             <div class="dropdown">
                 <button class="dropbtn"><MenuIcon style={{height: "40px", width: "40px"}} /></button>
                 <div class="dropdown-content">
-                    <a href="#">Account Page</a>
+                    <a href="/account">Account Page</a>
                     <a onClick={() => handleSignOut(username, setUsername)}>Sign Out</a>
                 </div>
             </div> : <div>

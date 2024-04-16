@@ -52,7 +52,7 @@ export default function ForgotPasswordModal({ forgotPasswordOpen, handleForgotPa
             <img id="modal-logo" src={logo} />
             <Typography className="modal-text">Forgot Password</Typography>
             <br></br>
-            <input type="text" id="email" name="email" placeholder="Enter email" style={{height: "60px", width: "350px"}} />
+            <input type="text" id="email" name="email" placeholder="Enter email" style={{height: "60px", width: "350px", paddingLeft: "10px", color: "black"}} />
             <br></br>
             <Link onClick={() => { handleForgotPasswordCloseAndErrors(); handleLoginOpen();}} className="white-link">Back to login</Link>
             { showErrorMessage ? <div><p className="error-message">{errorMessage}</p></div>
