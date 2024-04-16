@@ -48,10 +48,10 @@ const CartItem = ({ imgSrc, itemName, price, quant, onQuantityChange }) => {
     // Component's return JSX
     return (
         <div className="cart-item flex items-center justify-between space-x-4">
-            <img src={imageSrc} alt="Food item" className='w-20 h-20 object-cover'/>
-            <div className="text-lg flex-1">
-                <p className="name">{itemName}</p>
-                <p className="price">${price}</p>
+            <img src={imageSrc} alt="Food item" className='w-10 h-10 object-cover'/>
+            <div className="text-lg flex-1 pl-[50px]">
+                <p className="name text-3xl mb-4">{itemName}</p>
+                <p className="price text-3xl font-extrabold">${price}</p>
             </div>
             <div className="quantity-selector flex items-center">
                 <button id='subtract' onClick={handleSubtract}>-</button>
