@@ -23,21 +23,13 @@ function App() {
       <div className="app">
         <Navbar />
         <div className="content">
-          {/* <AccountPage name="Keenan Ray" address="323 Burgamy Way, Lands Between" cardnumber="4000-xxxx-xxxx-xxxx" expiredate="4/28"/> */}
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/category/:categoryName" element={<Category />} /> 
             <Route path="/product/:productId" element={<ProductDetails />} /> 
           </Routes>
         </div>
-      
         <Footer />
-
-        {/* {typeof backendData.users === "undefined" ? (
-          <p>Loading...</p>
-        ) : (
-          backendData.users.map((user, i) => <p key={i}> {user}</p>)
-        )} */}
       </div>
     </BrowserRouter>
   );
