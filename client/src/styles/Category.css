@@ -132,17 +132,22 @@
     justify-content: center;
   }
   
-.product-container {
+  .product-container {
     text-align: center;
     margin: 20px;
     width: 200px;
     padding: 20px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .product-image-cat {
-    width: 60%;
+    width: 100%;
     height: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .product-name-cat {
