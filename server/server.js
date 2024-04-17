@@ -1,5 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+var ObjectId = require('mongodb').ObjectId; 
 const app = express();
 
 app.use(express.json());
@@ -51,6 +52,24 @@ app.get("/getProducts", async (req, res) => {
   }
 });
 
+app.get("/getProducts/:id", async (req, res) => {
+  try {
+    
+    const products = db.collection("products");
+    var o_id = new ObjectId(req.params.id);
+    
+    const productsList = await products.findOne({"_id":o_id});
+    
+    //const item = productsList.find({"_id":o_id }).
+    console.log(productsList)
+    res.json(productsList);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+
+
 //Test Route
 // app.get("/getFrozen" , async (req, res) => {
 // try {
@@ -78,6 +97,7 @@ app.get("/getDiscounts", async (req, res) => {
   try {
     const products = db.collection("discounts");
     const productsList = await products.find({}).toArray();
+    
     res.json(productsList);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -88,6 +108,55 @@ app.get("/getUsers", async (req, res) => {
   try {
     const users = db.collection("users");
     const usersList = await users.find({}).toArray();
+    res.json(usersList);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get("/getSubscriptions/:username", async (req, res) => {
+  try {
+    
+    const users = db.collection("users");
+    userName = req.params.username
+    
+    
+    const usersList = await users.findOne({ "username": userName });
+    console.log(usersList.subscriptions)
+   
+    
+    res.json(usersList);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+app.get("/getFavorites/:username", async (req, res) => {
+  try {
+    
+    const users = db.collection("users");
+    userName = req.params.username
+    
+    
+    const usersList = await users.findOne({ "username": userName });
+    console.log(usersList.favorites)
+   
+    
+    res.json(usersList);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+app.get("/getWishlist/:username", async (req, res) => {
+  try {
+    
+    const users = db.collection("users");
+    userName = req.params.username
+    
+    
+    const usersList = await users.findOne({ "username": userName });
+    console.log(usersList.wishlist)
+   
+    
     res.json(usersList);
   } catch (e) {
     res.status(500).json({ error: e.message });

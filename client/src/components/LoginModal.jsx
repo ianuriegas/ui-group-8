@@ -29,7 +29,8 @@ export default function LoginModal({ loginOpen, handleLoginClose, handleCreateAc
       if (user) {
         console.log("Found a match");
         document.cookie = `username=${username};path=/;max-age=600`;
-        document.cookie = `userid=${user._id};path=/account;max-age=900`; // cookie expires in 600 seconds (10 minutes)
+        document.cookie = `userid=${user._id};path=/account;max-age=900`;
+        document.cookie = `name=${user.firstName};path=/account;max-age=900`; // cookie expires in 600 seconds (10 minutes)
         setShowErrorMessage(false);
         handleLoginClose();
         alert("Sucessfully logged in!");

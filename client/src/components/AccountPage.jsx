@@ -6,7 +6,7 @@ import cerealImg from '../images/cereal.webp'
 import pencil from '../images/pencil.png'
 import check from '../images/check-mark.png'
 import x from '../images/close.png'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getCookie } from './Navbar'
 
 function AccountPage(props) {
@@ -17,13 +17,67 @@ function AccountPage(props) {
     const [country, changeCountry] = useState(props.country);
     const [pcode, changePcode]= useState(props.pcode)
      const userid = getCookie("userid");
+     const Username = getCookie("username");
     
 
     
     const [cardType, changeCardtype] = useState(props.cardType);
     const [cardNumber, changeCardnumber] = useState(props.cNumber);
     const [expiredate, changeExpiredate] = useState(props.expDate);
+    const [subscriptions, setSubscriptions] = useState([]);
+    const [wishlist, setWishlist] = useState([]);
+    const [favorites, setFavorites] = useState([]);
     const [cvv, changeCvv] = useState(props.cvv);
+
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await fetch(`/getSubscriptions/${Username}`);
+            if (!response.ok) {
+            throw new Error('Failed to fetch subscriptions');
+            }
+            const productsList = await response.json();
+            setSubscriptions(subscriptions);
+        } catch (error) {
+            console.error('Error fetching subscriptions:', error);
+        }
+        };
+        fetchData();
+    }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await fetch(`/getWishlist/${Username}`);
+            if (!response.ok) {
+            throw new Error('Failed to fetch subscriptions');
+            }
+            const productsList = await response.json();
+            setSubscriptions(subscriptions);
+        } catch (error) {
+            console.error('Error fetching subscriptions:', error);
+        }
+        };
+        fetchData();
+    }, []);
+
+    
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await fetch(`/getFavorites/${Username}`);
+            if (!response.ok) {
+            throw new Error('Failed to fetch subscriptions');
+            }
+            const productsList = await response.json();
+            setSubscriptions(subscriptions);
+        } catch (error) {
+            console.error('Error fetching subscriptions:', error);
+        }
+        };
+        fetchData();
+    }, []);
+
+
     
 
     

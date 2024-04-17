@@ -12,12 +12,19 @@ import './App.css'
 
 function App() {
   const [username, setUsername] = React.useState('');
+  const [name, setName] = React.useState('');
   
   // get username from cookie   
   React.useEffect(() => {
     const user = getCookie('username');
     if (user) {
       setUsername(user);
+    }
+  }, []);
+  React.useEffect(() => {
+    const namee = getCookie('name');
+    if (namee) {
+      setName(namee);
     }
   }, []);
 
@@ -30,21 +37,30 @@ function App() {
             <Route path="/category/:categoryName" element={<Category />} /> 
             <Route path="/product/:productId" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart/>} />
-            {/* <Route path="/" element={<AccountPage name="Keenan Ray" 
-            street="123 Burgamy Way"
-            city="Lands"
-            state="Between"
-            country="Nokron"
-            pcode="42795"
-            cardType="Visa"
-            cNumber="4000--xxxx-xxxx-xxxx"
-            expDate="4/26"
-            cvv="123"
+            {/* <Route path="/" element={<AccountPage name={ }
+            street="Fill In"
+            city="Fill In"
+            state="Fill In"
+            country="Fill In"
+            pcode="Fill In"
+            cardType="Fill In"
+            cNumber="1234--xxxx-xxxx-xxxx"
+            expDate="Fill In"
+            cvv="Fill In"
             
             
             cardnumber="4000-xxxx-xxxx-xxxx" expiredate="4/28"/>} /> */}
             {username ?
-            <Route path="/account" element={<AccountPage name="Keenan Ray" address="323 Burgamy Way, Lands Between" cardnumber="4000-xxxx-xxxx-xxxx" expiredate="4/28"/>} />
+            <Route path="/account" element={<AccountPage name={name} street="Fill In"
+            city="Fill In"
+            state="Fill In"
+            country="Fill In"
+            pcode="Fill In"
+            cardType="Fill In"
+            cNumber="1234--xxxx-xxxx-xxxx"
+            expDate="Fill In"
+            cvv="Fill In"
+            />} />
             : <></>}
           </Routes>
         </div>
