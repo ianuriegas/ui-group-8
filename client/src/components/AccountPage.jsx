@@ -494,6 +494,7 @@ const AccountPage = ({ username }) => {
         <div className="sub-items-container">
           {wishlistItems.map((item) => (
             <ItemCard1
+              item={item}
               key={item._id}
               img={`/products/${item.productImage}`}
               name={item.productName}
@@ -515,6 +516,7 @@ const AccountPage = ({ username }) => {
         <div className="sub-items-container">
           {favoriteItems.map((item) => (
             <ItemCard1
+              item={item}
               key={item._id}
               img={`/products/${item.productImage}`}
               name={item.productName}
@@ -537,6 +539,7 @@ const AccountPage = ({ username }) => {
         <div className="sub-items-container">
           {subscriptionItems.map((item) => (
             <ItemCard1
+              item={item}
               key={item._id}
               img={`/products/${item.productImage}`}
               name={item.productName}

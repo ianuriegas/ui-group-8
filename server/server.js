@@ -63,7 +63,6 @@ app.get("/getProducts/:id", async (req, res) => {
     const productsList = await products.findOne({"_id":o_id});
     
     //const item = productsList.find({"_id":o_id }).
-    console.log(productsList)
     res.json(productsList);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -123,7 +122,6 @@ app.get("/getSubscriptions/:username", async (req, res) => {
     
     
     const usersList = await users.findOne({ "username": userName });
-    console.log(usersList.subscriptions)
    
     
     res.json(usersList);
@@ -139,8 +137,6 @@ app.get("/getFavorites/:username", async (req, res) => {
     
     
     const usersList = await users.findOne({ "username": userName });
-    console.log(usersList.favorites)
-   
     
     res.json(usersList);
   } catch (e) {
@@ -229,21 +225,17 @@ app.post('/updateCart', async (req, res) => {
 app.put('/replaceCart', async (req, res) => {
   try {
       const { username, cart } = req.body;
-
-      // Validate the required inputs
+      console.log(cart)
       if (!username || !cart || !Array.isArray(cart.items)) {
           return res.status(400).json({ error: 'Missing required fields or invalid cart format.' });
       }
 
       const users = db.collection("users");
 
-      // Check if the user exists
       const user = await users.findOne({ username });
       if (!user) {
           return res.status(404).json({ error: 'User not found.' });
       }
-
-      // Replace the cart, ensuring that items and discountCode are correctly structured
       const result = await users.updateOne(
           { username },
           { $set: { 'cart': { items: cart.items, discountCode: cart.discountCode || "" } } }
@@ -417,8 +409,6 @@ app.post('/removeFromFavorites', async (req, res) => {
 app.patch('/addAddress', async (req, res) => {
   try {
       const { username, newAddress } = req.body;
-      console.log(username);
-      console.log(newAddress);
       if (!username || !newAddress) {
           return res.status(400).json({ error: 'Missing required fields.' });
       }
@@ -556,6 +546,40 @@ app.get("/wishlist/:username", async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
 
+  }
+});
+
+app.get("/imgSearch", async (req, res) => {
+  const { itemName } = req.query;
+  if (!itemName) {
+    return res.status(400).json({ message: 'Item name is required' });
+  }
+
+  const apiKey = '8Jy7i43LXWJdnUW2pOqdrVFrhEqYquyu3h7B1ZxzwBZZDrMjkiatJMgN';
+  const url = `https://api.pexels.com/v1/search?query=${encodeURIComponent(itemName)}&orientation=square`;
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: apiKey
+      }
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+
+      if (data.photos && data.photos.length > 0) {
+        res.json({ imageUrl: data.photos[0].src.original });
+      } else {
+        res.status(404).json({ message: 'No images found' });
+      }
+    } else {
+      const errorData = await response.json();
+      res.status(response.status).json({ message: errorData.error || 'Error fetching image' });
+    }
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 

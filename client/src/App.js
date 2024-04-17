@@ -36,7 +36,7 @@ function App() {
             <Route exact path="/" element={<HomePage/>} />
             <Route path="/category/:categoryName" element={<Category />} /> 
             <Route path="/product/:productId" element={<ProductDetails />} />
-            <Route path="/cart" element={<Cart/>} />
+            <Route path="/cart" element={<Cart username={username}/>} />
             {/* <Route path="/" element={<AccountPage name={ }
             street="Fill In"
             city="Fill In"
