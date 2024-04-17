@@ -69,14 +69,14 @@ function Navbar() {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
         <div className="nav-1">
             <Link to="/"><img id='logo' src={logo} alt="Logo Icon That Directs To Home Page" /></Link>
-            <div className="search-box">
+            {/* <div className="search-box"> */}
             <SearchBar />
 
-            </div>
+            {/* </div> */}
             <div className='icon-group'>
             {username ?
             <div class="dropdown">
-                <button class="dropbtn"><MenuIcon style={{height: "40px", width: "40px"}} /></button>
+                <MenuIcon className="dropbtn" style={{height: "40px", width: "40px"}} />
                 <div class="dropdown-content">
                     <a href="/account">Account Page</a>
                     <a onClick={() => handleSignOut(username, setUsername)}>Sign Out</a>
