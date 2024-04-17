@@ -32,7 +32,7 @@ function HomePage() {
                     <PromoCard
                         key={index}
                         description={discount.description}
-                        code={`The Code: ${discount.discountCode}`}
+                        code={`Code: ${discount.discountCode}`}
                     />
                 ))}
             </div>
