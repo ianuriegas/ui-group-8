@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import "../styles/AccountPage.css";
 import ItemCard1 from "./ItemCard1";
@@ -8,15 +7,36 @@ import pencil from "../images/pencil.png";
 import check from "../images/check-mark.png";
 import x from "../images/close.png";
 import { useState } from "react";
-import { getCookie } from "./Navbar";
 
-function AccountPage({ username }) {
+const AccountPage = ({ username }) => {
   const [isOpen, changeToggle] = useState(false);
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState();
-  const [   selectedCard, setSelectedCard] = useState();
+  const [selectedCard, setSelectedCard] = useState();
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [favoriteItems, setFavoriteItems] = useState([]);
+  const [subscriptionItems, setSubscriptionItems] = useState([]);
   const [cards, setCards] = useState([]);
   const [user, setUser] = useState({});
+
+  const getProducts = async (productIds) => {
+    const products = [];
+
+    for (const id of productIds) {
+      try {
+        const response = await fetch(`/getProducts/${id}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const product = await response.json();
+        products.push(product);
+      } catch (error) {
+        console.error("Error fetching product with id " + id, error);
+      }
+    }
+
+    return products;
+  };
 
   useEffect(() => {
     fetch(`/getUserFromUsername?username=${encodeURIComponent(username)}`, {
@@ -28,14 +48,29 @@ function AccountPage({ username }) {
       .then((response) => response.json())
       .then((data) => setUser(data))
       .catch((error) => console.error("Error:", error));
-  }, [username, addresses, cards]);
+  }, [username]);
 
   useEffect(() => {
     if (user) {
       setAddresses(user.addresses);
       setCards(user.paymentInfo);
+      getProducts(user.wishlist?.productIds)
+        .then((products) => setWishlistItems(products))
+        .catch((error) => {
+          console.error("Error fetching products:", error);
+        });
+      getProducts(user.favorites?.productIds)
+        .then((products) => setFavoriteItems(products))
+        .catch((error) => {
+          console.error("Error fetching products:", error);
+        });
+      getProducts(user.subscriptions?.productIds)
+        .then((products) => setSubscriptionItems(products))
+        .catch((error) => {
+          console.error("Error fetching products:", error);
+        });
     }
-  }, [user, setUser]);
+  }, [user]);
 
   function showEdit(classname, classname2) {
     const element = document.querySelector(classname);
@@ -75,7 +110,10 @@ function AccountPage({ username }) {
           })
           .then((data) => {
             console.log(data);
-            setAddresses([selectedAddress]);
+            setAddresses((prevAddresses) => [
+              ...prevAddresses,
+              selectedAddress,
+            ]);
           });
       } else {
         addresses[selectedAddress.id] = selectedAddress;
@@ -95,53 +133,53 @@ function AccountPage({ username }) {
           })
           .then((data) => {
             console.log(data);
-            setAddresses(addresses);
+            setAddresses([...addresses]);
           })
           .catch((error) => console.error("Error:", error));
       }
     }
     if (class1 === ".non-edit-b") {
-        if (selectedCard.id == -1) {
-            fetch("/addPaymentMethod", {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ username, newPaymentMethod: selectedCard }),
-            })
-              .then((response) => {
-                hideEdit(class1, class2);
-                if (!response.ok) {
-                  throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-              })
-              .then((data) => {
-                console.log(data);
-                setCards([selectedCard]);
-              });
-          } else {
-            cards[selectedCard.id] = selectedCard;
-            fetch("/replacePaymentInfo", {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ username, paymentInfo: cards }),
-            })
-              .then((response) => {
-                hideEdit(class1, class2);
-                if (!response.ok) {
-                  throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-              })
-              .then((data) => {
-                console.log(data);
-                setCards(cards);
-              })
-              .catch((error) => console.error("Error:", error));
-          }
+      if (selectedCard.id == -1) {
+        fetch("/addPaymentMethod", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, newPaymentMethod: selectedCard }),
+        })
+          .then((response) => {
+            hideEdit(class1, class2);
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setCards((prevCards) => [...prevCards, selectedCard]);
+          });
+      } else {
+        cards[selectedCard.id] = selectedCard;
+        fetch("/replacePaymentInfo", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, paymentInfo: cards }),
+        })
+          .then((response) => {
+            hideEdit(class1, class2);
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setCards([...cards]);
+          })
+          .catch((error) => console.error("Error:", error));
+      }
     }
 
     hideEdit(class1, class2);
@@ -345,96 +383,100 @@ function AccountPage({ username }) {
           </div>
           {selectedCard && (
             <>
-          <div className="non-edit-b">
-            <div className="label col1 row1">Card Type</div>
-            <div className="label col1 row2">Card Number</div>
-            <div className="label col1 row3">Expire Date</div>
-            <div className="label col1 row4">CVV</div>
+              <div className="non-edit-b">
+                <div className="label col1 row1">Card Type</div>
+                <div className="label col1 row2">Card Number</div>
+                <div className="label col1 row3">Expire Date</div>
+                <div className="label col1 row4">CVV</div>
 
-            <div className="values col2 row1">{selectedCard.cardType}</div>
-            <div className="values col2 row2">{selectedCard.cardNumber}</div>
-            <div className="values col2 row3">{selectedCard.expireDate}</div>
-            <div className="values col2 row4">{selectedCard.cvv}</div>
-          </div>
+                <div className="values col2 row1">{selectedCard.cardType}</div>
+                <div className="values col2 row2">
+                  {selectedCard.cardNumber}
+                </div>
+                <div className="values col2 row3">
+                  {selectedCard.expireDate}
+                </div>
+                <div className="values col2 row4">{selectedCard.cvv}</div>
+              </div>
 
-          <div className="editable-b">
-            <div className="label col1 row1">Card Type</div>
-            <div className="label col1 row2">Card Number</div>
-            <div className="label col1 row3">Expire Date</div>
-            <div className="label col1 row4">CVV</div>
+              <div className="editable-b">
+                <div className="label col1 row1">Card Type</div>
+                <div className="label col1 row2">Card Number</div>
+                <div className="label col1 row3">Expire Date</div>
+                <div className="label col1 row4">CVV</div>
 
-            <input
-              className="addressInput col2 row1"
-              type="text"
-              name="cardtypeinput"
-              id="cardTypeInput"
-              value={selectedCard.cardType}
-              onChange={(e) => {
-                const newCardType = e.target.value;
-                setSelectedCard({
-                  ...selectedCard,
-                  cardType: newCardType,
-                });
-              }}
-            />
-            <input
-              className="addressInput col2 row2"
-              type="text"
-              name="cardnuminput"
-              id="cardNumInput"
-              value={selectedCard.cardNumber}
-              onChange={(e) => {
-                const newCardNumber = e.target.value;
-                setSelectedCard({
-                  ...selectedCard,
-                  cardNumber: newCardNumber,
-                });
-              }}
-            />
-            <input
-              className="addressInput col2 row3"
-              type="text"
-              name="expdateinput"
-              id="expireDateInput"
-              value={selectedCard.expireDate}
-              onChange={(e) => {
-                const newExpireDate = e.target.value;
-                setSelectedCard({
-                  ...selectedCard,
-                  expireDate: newExpireDate,
-                });
-              }}
-            />
-            <input
-              className="addressInput col2 row4"
-              type="text"
-              name="cvvinput"
-              id="cvvInput"
-              value={selectedCard.cvv}
-              onChange={(e) => {
-                const newCvv = e.target.value;
-                setSelectedCard({
-                  ...selectedCard,
-                  cvv: newCvv,
-                });
-              }}
-            />
-            <div className="icons-container row4">
-              <button
-                onClick={() => updateInfo(".non-edit-b", ".editable-b")}
-                type="submit"
-              >
-                <img src={check} alt="check mark" />
-              </button>
-              <button
-                onClick={() => hideEdit(".non-edit-b", ".editable-b")}
-                type="submit"
-              >
-                <img src={x} alt="cancel" />
-              </button>
-            </div>
-          </div>
-          </>
+                <input
+                  className="addressInput col2 row1"
+                  type="text"
+                  name="cardtypeinput"
+                  id="cardTypeInput"
+                  value={selectedCard.cardType}
+                  onChange={(e) => {
+                    const newCardType = e.target.value;
+                    setSelectedCard({
+                      ...selectedCard,
+                      cardType: newCardType,
+                    });
+                  }}
+                />
+                <input
+                  className="addressInput col2 row2"
+                  type="text"
+                  name="cardnuminput"
+                  id="cardNumInput"
+                  value={selectedCard.cardNumber}
+                  onChange={(e) => {
+                    const newCardNumber = e.target.value;
+                    setSelectedCard({
+                      ...selectedCard,
+                      cardNumber: newCardNumber,
+                    });
+                  }}
+                />
+                <input
+                  className="addressInput col2 row3"
+                  type="text"
+                  name="expdateinput"
+                  id="expireDateInput"
+                  value={selectedCard.expireDate}
+                  onChange={(e) => {
+                    const newExpireDate = e.target.value;
+                    setSelectedCard({
+                      ...selectedCard,
+                      expireDate: newExpireDate,
+                    });
+                  }}
+                />
+                <input
+                  className="addressInput col2 row4"
+                  type="text"
+                  name="cvvinput"
+                  id="cvvInput"
+                  value={selectedCard.cvv}
+                  onChange={(e) => {
+                    const newCvv = e.target.value;
+                    setSelectedCard({
+                      ...selectedCard,
+                      cvv: newCvv,
+                    });
+                  }}
+                />
+                <div className="icons-container row4">
+                  <button
+                    onClick={() => updateInfo(".non-edit-b", ".editable-b")}
+                    type="submit"
+                  >
+                    <img src={check} alt="check mark" />
+                  </button>
+                  <button
+                    onClick={() => hideEdit(".non-edit-b", ".editable-b")}
+                    type="submit"
+                  >
+                    <img src={x} alt="cancel" />
+                  </button>
+                </div>
+              </div>
+            </>
           )}
         </div>
       </div>
@@ -450,10 +492,13 @@ function AccountPage({ username }) {
           </form>
         </div>
         <div className="sub-items-container">
-          <ItemCard1 img={appleImg} name="Apples" />
-          <ItemCard1 img={appleImg} name="Apples" />
-          <ItemCard1 img={appleImg} name="Apples" />
-          <ItemCard1 img={cerealImg} name="Cereal" />
+          {wishlistItems.map((item) => (
+            <ItemCard1
+              key={item._id}
+              img={`/products/${item.productImage}`}
+              name={item.productName}
+            />
+          ))}
         </div>
       </div>
       <div className="favorites">
@@ -468,10 +513,13 @@ function AccountPage({ username }) {
           </form>
         </div>
         <div className="sub-items-container">
-          <ItemCard1 img={appleImg} name="Apples" />
-          <ItemCard1 img={appleImg} name="Apples" />
-          <ItemCard1 img={appleImg} name="Apples" />
-          <ItemCard1 img={cerealImg} name="Cereal" />
+          {favoriteItems.map((item) => (
+            <ItemCard1
+              key={item._id}
+              img={`/products/${item.productImage}`}
+              name={item.productName}
+            />
+          ))}
         </div>
       </div>
 
@@ -487,14 +535,17 @@ function AccountPage({ username }) {
           </form>
         </div>
         <div className="sub-items-container">
-          <ItemCard1 img={appleImg} name="Apples " />
-          <ItemCard1 img={appleImg} name="Apples" />
-          <ItemCard1 img={appleImg} name="Apples" />
-          <ItemCard1 img={cerealImg} name="Cereal" />
+          {subscriptionItems.map((item) => (
+            <ItemCard1
+              key={item._id}
+              img={`/products/${item.productImage}`}
+              name={item.productName}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default AccountPage;

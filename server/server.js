@@ -179,17 +179,6 @@ app.get("/getUserFromUsername", async (req, res) => {
   }
 });
 
-=======
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-    res.json(user);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
 app.post("/createUser", async (req, res) => {
   try {
     const users = db.collection("users");
@@ -547,6 +536,8 @@ app.put('/replacePaymentInfo', async (req, res) => {
   } catch (error) {
       console.error('Error replacing payment info:', error);
       res.status(500).json({ error: 'Failed to replace payment info.' });
+  }
+});
 
 // New endpoint to get a user's wishlist
 app.get("/wishlist/:username", async (req, res) => {
@@ -571,3 +562,4 @@ app.get("/wishlist/:username", async (req, res) => {
 app.listen(5001, () => {
   console.log("Server started on port 5001");
 });
+
