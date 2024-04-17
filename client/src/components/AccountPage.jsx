@@ -10,8 +10,18 @@ import { useState } from 'react'
 import { getCookie } from './Navbar'
 
 function AccountPage({username}) {
+    const[isOpen,changeToggle] =  useState(false)
+    const [street, changeStreet] = useState();
+    const [city, changeCity] = useState();
+    const [state, changeState] = useState();
+    const [country, changeCountry] = useState();
+    const [pcode, changePcode]= useState()
     const [address, changeAddress] = useState('');
     const [cardName, changeCardname] = useState('');
+    const [cardType, changeCardtype] = useState();
+    const [cardNumber, changeCardnumber] = useState();
+    const [expiredate, changeExpiredate] = useState();
+    const [cvv, changeCvv] = useState();
     const [user, setUser] = useState({});
 
     useEffect(() => {
@@ -29,7 +39,7 @@ function AccountPage({username}) {
     function showEdit(classname , classname2){
         const element = document.querySelector(classname);
         const element2 = document.querySelector(classname2);
-        if(isOpen === false){
+        if(isOpen === false){ 
         element.style.display = "none"
         element2.style.display ="grid"
         }else{
@@ -127,7 +137,7 @@ function AccountPage({username}) {
 
     }
     const updateAddress= (newAddress) => {
-        fetch(`/updateAddress/${userid}`, {
+        fetch(`/updateAddress/${username}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
