@@ -13,21 +13,14 @@
 }
 .promo-description{
     margin-top: 20px;
-
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
-    width: 100px;
-    
-    
-    
+    width: 150px;
 }
 .promo-code{
     margin-top: 20px;
-
     font-size: 18px;
     font-weight: bold;
     color: #616161;
     margin-bottom: 10px;
-    
-
 }

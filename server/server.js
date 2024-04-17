@@ -88,9 +88,6 @@ app.post("/createUser", async (req, res) => {
   }
 });
 
-
-
-
 app.post('/addToCart', async (req, res) => {
   try {
     const { username, productId, quantity } = req.body;
