@@ -23,6 +23,10 @@
      ```
      cd client
      ```
+   - Install necessary dependencies:
+     ```
+     npm install
+     ```
    - Run the client application:
      ```
      npm start
@@ -33,6 +37,10 @@
    - In the second terminal, navigate to the server directory:
      ```
      cd server
+     ```
+   - Install necessary dependencies:
+     ```
+     npm install
      ```
    - Run the server application:
      ```
