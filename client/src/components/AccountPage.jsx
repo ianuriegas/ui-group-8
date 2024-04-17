@@ -7,102 +7,228 @@ import pencil from '../images/pencil.png'
 import check from '../images/check-mark.png'
 import x from '../images/close.png'
 import { useState } from 'react'
+import { getCookie } from './Navbar'
 
 function AccountPage(props) {
-    const [address, changeAddress] = useState(props.address);
-    const [cardName, changeCardname] = useState(props.name);
-    const [cardNumber, changeCardnumber] = useState(props.cardnumber);
-    const [expiredate, changeExpiredate] = useState(props.expiredate);
+    const[isOpen,changeToggle] =  useState(false)
+    const [street, changeStreet] = useState(props.street);
+    const [city, changeCity] = useState(props.city);
+    const [state, changeState] = useState(props.state);
+    const [country, changeCountry] = useState(props.country);
+    const [pcode, changePcode]= useState(props.pcode)
+     const userid = getCookie("userid");
+    
 
+    
+    const [cardType, changeCardtype] = useState(props.cardType);
+    const [cardNumber, changeCardnumber] = useState(props.cNumber);
+    const [expiredate, changeExpiredate] = useState(props.expDate);
+    const [cvv, changeCvv] = useState(props.cvv);
+    
+
+    
     function showEdit(classname , classname2){
         const element = document.querySelector(classname);
         const element2 = document.querySelector(classname2);
+        if(isOpen === false){
         element.style.display = "none"
-        if(classname2 === ".credential-container-t"){
-            element2.style.display = "grid"
+        element2.style.display ="grid"
         }else{
-            element2.style.display = "flex"
+            element2.style.display = "none"
+            element.style.display ="grid"  
         }
         
-        document.getElementById("addressInput").value = address;
-        document.getElementById("card-name").value = cardName;
-        document.getElementById("card-info").value = cardNumber;
-        document.getElementById("exp-date").value = expiredate;
+        changeToggle(!isOpen);
+        if(classname ===".non-edit-a"){
+            document.getElementById("streetInput").value = street;
+            document.getElementById("cityInput").value = city;
+            document.getElementById("stateInput").value = state;
+            document.getElementById("postalInput").value = pcode;
+            document.getElementById("countryInput").value = country;
+        }if(classname ===".non-edit-b"){
+            document.getElementById("cardTypeInput").value = cardType;
+            document.getElementById("cardNumInput").value = cardNumber;
+            document.getElementById("expireDateInput").value = expiredate;
+            document.getElementById("cvvInput").value = cvv;
+            
+        }
+        
+        // document.getElementById("addressInput").value = address;
+        // document.getElementById("card-name").value = cardName;
+        // document.getElementById("card-info").value = cardNumber;
+        // document.getElementById("exp-date").value = expiredate;
     }
     function hideEdit(classname , classname2){
         const element = document.querySelector(classname);
         const element2 = document.querySelector(classname2);
         
-        if(classname === ".credential-container"){
-            element.style.display = "grid"
-        }else{
-            element.style.display = "flex"
-        }
+        element.style.display = "grid"
         element2.style.display = "none"
-        document.getElementById("addressInput").value = "";
-        document.getElementById("card-name").value ="";
-        document.getElementById("card-info").value ="";
-        document.getElementById("exp-date").value ="";
+        // document.getElementById("addressInput").value = "";
+        // document.getElementById("card-name").value ="";
+        // document.getElementById("card-info").value ="";
+        // document.getElementById("exp-date").value ="";
     }
-    function updateAddress(class1, class2){
-        var addy = document.getElementById("addressInput").value;
-        var cname = document.getElementById("card-name").value;
-        var cinfo = document.getElementById("card-info").value;
-        var edate =document.getElementById("exp-date").value;
-        changeAddress(addy);
-        changeCardname(cname)
-        changeCardnumber(cinfo)
-        changeExpiredate(edate)
+    function updateInfo(class1, class2){
+        if(class1===".non-edit-a"){
+            var streetInput = document.getElementById("streetInput").value;
+        var cityInput = document.getElementById("cityInput").value;
+        var stateInput = document.getElementById("stateInput").value;
+        var countryInput =document.getElementById("countryInput").value;
+         var postalInput =document.getElementById("postalInput").value;
+
+
+       document.getElementById("streetInput").value ="";
+        document.getElementById("cityInput").value="";
+        document.getElementById("stateInput").value="";
+        document.getElementById("countryInput").value="";
+        document.getElementById("postalInput").value="";
+
+
+        changeCity(cityInput)
+        changeCountry(countryInput)
+        changePcode(postalInput)
+        changeStreet(streetInput)
+        changeState(stateInput)
+
+        const newAddress ={
+            "street": street, 
+            "city":city,
+            "state": state,
+            "postalCode" :pcode ,
+            "country": country
+
+        }
+        // updateAddress(newAddress );
+
+
+        }
+        if(class1 ===".non-edit-b"){
+            var ctypeInput = document.getElementById("cardTypeInput").value;
+            var cnumInput = document.getElementById("cardNumInput").value;
+            var expInput = document.getElementById("expireDateInput").value;
+            var cvvInput = document.getElementById("cvvInput").value;
+
+        document.getElementById("cardTypeInput").value="";
+        document.getElementById("cardNumInput").value="";
+        document.getElementById("expireDateInput").value="";
+        document.getElementById("cvvInput").value="";
+
+        changeCardtype(ctypeInput);
+        changeCardnumber(cnumInput);
+        changeExpiredate(expInput);
+        changeCvv(cvvInput);
+        }
+        
+        
         
         hideEdit(class1, class2);
         
         
 
     }
+    const updateAddress= (newAddress) => {
+        fetch(`/updateAddress/${userid}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newAddress)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("data sent", data);
+            
+        })
+        .catch(error => {
+            console.error("Error sending", error);
+            
+        });
+      }
 
     
   return (
     <div className='account-page-container'>
         <h1 id='account-name'>{props.name}</h1>
         <div className="personal">
-            <h1 className='sect-headers'>Personal Information</h1>
-            <div className="info-container">
-                <div className="address-label">
-                    <h3>Address</h3>
-                    <button  className='edit' onClick={() =>showEdit(".address", ".address-t")} type='image'><img src={pencil} alt="edit icon" /></button>
-                    
+            <div className="personal-info-label">Personal Information</div>
+            <div className="address-container">
+                <div className="address-label-c">
+                    <div className="address-label">Address</div>
+                    <button onClick={()=>showEdit(".non-edit-a",".editable-a")} className='edit'><img  src={pencil} alt="" /></button>
                 </div>
-                <div className="address">{address}</div>
-                <div className="address-t">
-                    <input type="text" name="address" id="addressInput" />
-                <button type="image" className='accept' onClick={()=>updateAddress(".address",".address-t")}><img src={check} alt="check mark" /></button>
-                <button type="image" className='discard' onClick={()=>hideEdit(".address",".address-t")}><img src={x} alt="discard" /></button>
+                <div className="non-edit-a">
+                <div className="label col1 row1">Street</div>
+                <div className="label col1 row2">City</div>
+                <div className="label col1 row3">State</div>
+                <div className="label col1 row4">Postal Code</div>
+                <div className="label col1 row5">Country</div>
+
+                <div className="values col2 row1">{street}</div>
+                <div className="values col2 row2">{city}</div>
+                <div className="values col2 row3">{state}</div>
+                <div className="values col2 row4">{pcode}</div>
+                <div className="values col2 row5">{country}</div>
                 </div>
-                <div className="card-info-label">
-                    <h3>Card Information</h3>
-                    <button onClick={() =>showEdit(".credential-container", ".credential-container-t")} className='edit' type='image'><img src={pencil} alt="edit icon" /></button>
-                </div>
-                <div className="credential-container">
-                    <div className="name-label">Name</div>
-                    <div className="number-label">Card No.</div>
-                    <div className="exp-date-label">Expire Date</div>
-                    <div className="card-name">{cardName}</div>
-                    <div className="card-info">{cardNumber}</div>
-                    <div className="exp-date">{expiredate}</div>
+
+                <div className="editable-a">
+                <div className="label col1 row1">Street</div>
+                <div className="label col1 row2">City</div>
+                <div className="label col1 row3">State</div>
+                <div className="label col1 row4">Postal Code</div>
+                <div className="label col1 row5">Country</div>
+
+                <input className='addressInput col2 row1' type="text" name="streetinput" id="streetInput" />
+                <input className='addressInput col2 row2' type="text" name="cityinput" id="cityInput" />
+                <input className='addressInput col2 row3' type="text" name="stateinput" id="stateInput" />
+                <input className='addressInput col2 row4' type="text" name="postalinput" id="postalInput" />
+                <input className='addressInput col2 row5 ' type="text" name="countryinput" id="countryInput" />
+                <div className="icons-container row5">
+                <button onClick={()=> updateInfo(".non-edit-a",".editable-a")} type="submit"><img  src={check} alt="check mark" /></button>
+                <button onClick={()=> hideEdit(".non-edit-a",".editable-a")} type="submit"><img  src={x}alt="cancel" /></button></div>
+                
+                
+                
+                
 
                 </div>
-                <div className="credential-container-t">
-                    <div className="name-label">Name</div>
-                    <div className="number-label">Card No.</div>
-                    <div className="exp-date-label">Expire Date</div>
-                    <div className="card-name "><input className='tb' type="text" name="card-name" id="card-name" /></div>
-                    <div className="card-info "><input className='tb' type="text" name="card-name" id="card-info" /></div>
-                    <div className="exp-date "><input className='tb' type="text" name="card-name" id="exp-date" />
-                    <button type="image" className='accept' onClick={()=>updateAddress(".credential-container",".credential-container-t")}><img src={check} alt="check mark" /></button>
-                <button type="image" className='discard' onClick={()=>hideEdit(".credential-container",".credential-container-t")}><img src={x} alt="discard" /></button></div>
-
-
+               
+                
+            </div>
+            <div className="card-info-container">
+            <div className="address-label-c">
+                    <div className="address-label">Card Information</div>
+                    <button onClick={()=>showEdit(".non-edit-b",".editable-b")} className='edit'><img  src={pencil} alt="edit" /></button>
                 </div>
+                <div className="non-edit-b">
+                <div className="label col1 row1">Card Type</div>
+                <div className="label col1 row2">Card Number</div>
+                <div className="label col1 row3">Expire Date</div>
+                <div className="label col1 row4">CVV</div>
+
+                <div className="values col2 row1">{cardType}</div>
+                <div className="values col2 row2">{cardNumber}</div>
+                <div className="values col2 row3">{expiredate}</div>
+                <div className="values col2 row4">{cvv}</div>
+                </div>
+
+                <div className="editable-b">
+                <div className="label col1 row1">Card Type</div>
+                <div className="label col1 row2">Card Number</div>
+                <div className="label col1 row3">Expire Date</div>
+                <div className="label col1 row4">CVV</div>
+
+                <input className="addressInput col2 row1" type="text" name="cardtypeinput" id="cardTypeInput" />
+                <input className="addressInput col2 row2" type="text" name="cardnuminput" id="cardNumInput" />
+                <input className="addressInput col2 row3" type="text" name="expdateinput" id="expireDateInput" />
+                <input className="addressInput col2 row4" type="text" name="cvvinput" id="cvvInput" />
+                <div className="icons-container row4">
+                <button onClick={()=> updateInfo(".non-edit-b",".editable-b")} type="submit"><img  src={check} alt="check mark" /></button>
+                <button onClick={()=> hideEdit(".non-edit-b",".editable-b")} type="submit"><img  src={x}alt="cancel" /></button></div>
+                </div>
+                
+                
+                
             </div>
         </div>
         <div className="wishlist">

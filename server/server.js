@@ -1,5 +1,5 @@
 const express = require("express");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const app = express();
 
 app.use(express.json());
@@ -86,6 +86,7 @@ app.get("/getUsers", async (req, res) => {
     const database = client.db("group_8_db");
     const products = database.collection("users");
     const productsList = await products.find({}).toArray();
+    
     res.json(productsList);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -109,6 +110,9 @@ app.post("/createUser", async (req, res) => {
     await client.close();
   }
 });
+
+
+
 
 app.listen(5001, () => {
   console.log("Server started on port 5001");

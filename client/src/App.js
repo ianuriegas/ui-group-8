@@ -27,6 +27,19 @@ function App() {
           <Routes>
             <Route exact path="/" element={<HomePage/>} />
             <Route path="/cart" element={<Cart/>} />
+            {/* <Route path="/" element={<AccountPage name="Keenan Ray" 
+            street="123 Burgamy Way"
+            city="Lands"
+            state="Between"
+            country="Nokron"
+            pcode="42795"
+            cardType="Visa"
+            cNumber="4000--xxxx-xxxx-xxxx"
+            expDate="4/26"
+            cvv="123"
+            
+            
+            cardnumber="4000-xxxx-xxxx-xxxx" expiredate="4/28"/>} /> */}
             {username ?
             <Route path="/account" element={<AccountPage name="Keenan Ray" address="323 Burgamy Way, Lands Between" cardnumber="4000-xxxx-xxxx-xxxx" expiredate="4/28"/>} />
             : <></>}
