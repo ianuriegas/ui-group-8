@@ -72,7 +72,6 @@ function ProductDetails() {
       
     } catch (error) {
       console.error('Error adding product to cart:', error);
-      alert('Failed to add item to cart. Please try again.');
     }
   };
   // add to subscription section
@@ -98,7 +97,6 @@ function ProductDetails() {
       
     } catch (error) {
       console.error('Error adding product to cart:', error);
-      alert('Failed to add item to cart. Please try again.');
     }
   };
   // add to wishlist section
@@ -124,7 +122,6 @@ function ProductDetails() {
       
     } catch (error) {
       console.error('Error adding product to cart:', error);
-      alert('Failed to add item to cart. Please try again.');
     }
   };
   // add to favorites section
@@ -153,7 +150,6 @@ function ProductDetails() {
       });
     } catch (error) {
       console.error('Error adding product to cart:', error);
-      alert('Failed to add item to cart. Please try again.');
     }
   };
 
