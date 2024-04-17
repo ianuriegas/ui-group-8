@@ -1,0 +1,288 @@
+.details-container {
+    display: grid;
+    grid-template-columns: minmax(150px, 50%) 1fr;
+    grid-gap: 1rem;
+    margin: 0 auto;
+    width: 100vw;
+    height: 85vh;
+    padding: 1rem;
+    overflow: auto;
+}
+
+.left-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+}
+
+.arrow-container {
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.left-content {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 50%;
+    margin-left: 25%;
+}
+
+.image-container {
+    display: flex;
+    justify-content: left;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+    min-width: 300px;
+    max-width: 350px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.availability-container {
+    color: #E2743E;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.description-title {
+    color: #275143;
+    font-size: 22px;
+    font-weight: bold;
+    height: 4vh;
+    margin-bottom: 12px;
+}
+
+.description {
+    font-size: 18px;
+    padding-bottom: 15px;
+    min-width: 400px;
+    min-height: 100px;
+}
+
+.nutrition-facts {
+    display: flex;
+    justify-content: left;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.nutrition-image {
+    width: 60%;
+    height: auto;
+    min-width: 300px;
+    max-width: 350px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.dropdown {
+    position: relative;
+  }
+  
+
+.dropdown button {
+    color: #275143;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid grey;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 350px; 
+    position: relative; 
+  }
+  
+
+.dropdown button::after {
+    content: "\f0d7";
+    font-family: 'FontAwesome';
+    font-size: 20px;
+    margin-left: 8px;
+  }
+  
+.right-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    width: 60%;
+}
+
+.right-content {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 100%;
+    max-width: 70%;
+    margin-left: 50%;
+}  
+
+.product-name-container {
+    display: flex;
+    justify-content: left;
+    margin-top: 55px;
+    margin-bottom: 10px;
+}
+
+.item-name-det {
+    color: #275143;
+    font-size: 30px;
+    font-weight: bold;
+    min-width: 450px;
+}
+
+.product-divider-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 415px;
+}
+
+.product-divider {
+    width: 100%;
+    border: none;
+    border-top: 2px solid black;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.shelf-life-container {
+    width: 70%;
+    height: auto;
+    display: flex;
+    justify-content: left;
+    min-width: 250px;
+    min-width: 415px;
+    margin-bottom: 30px;
+}
+
+.shelf-life {
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: #A4D24E;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 20px;
+    padding-right: 20px;
+    min-width: 250px;
+    margin-right: 130px;
+}
+
+.favorites-button {
+    display: flex;
+    align-content: center;
+    margin-bottom: 12px;
+}
+
+.item-price-container {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    min-width: 415px;
+}
+
+.item-price-det {
+    color: #2875A0;
+    font-size: 35px;
+    font-weight: bold;
+    padding-left: 10px;
+    margin-right: 150px;
+}
+
+.quantity-container {
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+  
+.quantity-button-det {
+    background-color: #ffffff; /* Button background color */
+    border: 1px solid #cccccc; /* Button border */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 5px; /* Button padding */
+    border-radius: 10px; 
+    margin-bottom: 15px;
+}
+  
+.quantity-det {
+    padding: 30px;
+    font-size: 35px; /* Font size for the quantity */
+    margin-bottom: 18px;
+    color: black;
+}
+
+.add-to-cart-button {
+    min-width: 415px;
+    border-radius: 10px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #A6DFFF;
+    color: #2875A0;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.add-to-cart-button:hover {
+    background-color: #87CEFA; /* Change background color on hover */
+    color: #2875A0; /* Change text color on hover */
+}
+  
+.add-to-cart-button:active {
+    transform: translateY(2px); /* Add a slight downward movement when clicked */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Adjust box shadow when clicked */
+}
+
+.create-subscription-button {
+    min-width: 415px;
+    border-radius: 10px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #FFDC62;
+    color: #86722A;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.create-subscription-button:hover {
+    background-color: #ffd335; /* Change background color on hover */
+    color: #86722A; /* Change text color on hover */
+}
+  
+.create-subscription-button:active {
+    transform: translateY(2px); /* Add a slight downward movement when clicked */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Adjust box shadow when clicked */
+}
+
+.add-to-wishlist-button {
+    min-width: 415px;
+    border-radius: 10px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #E2743E;
+    color: #733618;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.add-to-wishlist-button:hover {
+    background-color: #e06425; /* Change background color on hover */
+    color: #733618; /* Change text color on hover */
+}
+  
+.add-to-wishlist-button:active {
+    transform: translateY(2px); /* Add a slight downward movement when clicked */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Adjust box shadow when clicked */
+}

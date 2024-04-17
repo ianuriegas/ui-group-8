@@ -1,0 +1,160 @@
+.none{
+    text-decoration: none;
+    color: #FFF5D3;
+    font-weight: bold;
+    text-align: center;
+
+}
+
+.none:hover{
+    font-size: 15px;
+}
+
+.divider-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.divider {
+    width: 100%;
+    border: none;
+    border-top: 2px solid black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.category-container {
+    display: grid;
+    grid-template-columns: minmax(150px, 350px) repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 1rem;
+    margin: 0 auto;
+    width: 100vw;
+    height: 85vh;
+    padding: 1rem;
+    overflow: auto;
+}
+
+.item-container {
+    grid-column: span 2;
+    padding: 20px;
+    height: 80vh;
+}
+
+.category-header {
+    display: flex;
+    align-items: flex-start;
+    font-size: 50px;
+    font-weight: bold;
+    color: #275143;
+    justify-content: flex-start;
+    margin-left: 10px;
+}
+
+.filter-container {
+    grid-column: span 1;
+    padding: 20px;
+    height: 100%;
+}
+
+.rounded-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border: 0.5px solid grey;
+    border-radius: 10px;
+    padding: 25px;
+    margin-top: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.filter-heading {
+    color: #2875A0;
+    font-weight: bold;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.checkbox-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkbox-container label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 18px;
+}
+
+.checkbox-container input[type='checkbox'] {
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+    appearance: none;
+    position: relative;
+    border-radius: 4px;
+    border: 2px solid grey;
+    background-color: transparent;
+}
+
+.checkbox-container input[type='checkbox']::after {
+    content: '\2713'; 
+    font-size: 16px; 
+    color: white; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0; 
+    transition: opacity 0.3s ease; 
+}
+
+.checkbox-container input[type='checkbox']:checked {
+    background-color: #A4D24E; 
+    border-color: #A4D24E; 
+}
+
+.checkbox-container input[type='checkbox']:checked::after {
+    opacity: 1; 
+}
+
+.checkbox-container .checkbox-label {
+    color: #275143;
+    font-weight: bold; 
+    font-size: 18px; 
+}
+
+.product-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+.product-container {
+    text-align: center;
+    margin: 20px;
+    width: 200px;
+    padding: 20px;
+    position: relative;
+}
+
+.product-image-cat {
+    width: 60%;
+    height: auto;
+}
+
+.product-name-cat {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 15px;
+    color: #275143;
+}
+
+.product-price-cat {
+    margin-top: 5px;
+    color: #2875A0;
+    font-weight: bold;
+    font-size: 20px;
+}
