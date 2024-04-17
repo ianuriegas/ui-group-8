@@ -8,6 +8,7 @@ import CreateAccountModal from './CreateAccountModal'
 import ForgotPasswordModal from './ForgotPasswordModal'
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import SearchBar from './SearchBar'
 
 export function getCookie(name) {
     const cookieString = document.cookie;
@@ -69,10 +70,7 @@ function Navbar() {
         <div className="nav-1">
             <a href="http://"><img id='logo' src={logo} alt="Logo Icon That Directs To Home Page" /></a>
             <div className="search-box">
-            <form>
-            <input  type="search" name="" id="search-bar" placeholder='Search...'/>
-            <button><i className="fa fa-search search-icon" style={{color:'#275143' , backgroundColor:'white' , fontSize:'36px'}}></i></button>
-            </form>
+            <SearchBar />
 
             </div>
             <div className='icon-group'>
