@@ -2,6 +2,7 @@ import React from 'react'
 import '../styles/HomePage.css'
 import PromoCard from './PromoCard'
 import appleImg from '../images/apples.jpg'
+import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
@@ -17,11 +18,10 @@ function HomePage() {
     <div className="freq row">
         <h2 className='section'>Frequently Shopped Categories</h2>
         <div className="freq-cards-row">
-            <a href='/' className='freqB'>Frozen</a>
-            <a href='/' className='freqB'>Dairy</a>
-            <a href='/' className='freqB'>Dry Foods</a>
-            <a href='/' className='freqB'>Essentials</a>
-            
+            <Link to="/category/frozen" className='freqB'>Frozen</Link>
+            <Link to="/category/dairy" className='freqB'>Dairy</Link>
+            <Link to="/category/dry-foods" className='freqB'>Dry Foods</Link>
+            <Link to="/category/home-essentials" className='freqB'>Home Essentials</Link>
         </div>
     </div>
     <div className="wish row">
