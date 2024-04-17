@@ -344,6 +344,42 @@ app.post('/removeFromFavorites', async (req, res) => {
   }
 });
 
+// New endpoint to get a product by ID
+app.get("/products/:productId", async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const products = db.collection("products");
+    const product = await products.findOne({ _id: new ObjectId(productId) });
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// New endpoint to get a user's wishlist
+app.get("/wishlist/:username", async (req, res) => {
+  try {
+    const { username } = req.params;
+    const users = db.collection("users");
+    const user = await users.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const wishlist = user.wishlist || { productIds: [] }; // Handle cases where wishlist is empty
+
+    res.json(wishlist);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.listen(5001, () => {
   console.log("Server started on port 5001");
 });
