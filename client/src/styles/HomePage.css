@@ -82,3 +82,12 @@
     font-size: 15px;
     font-weight: bold;
 }
+
+.sign-in-wish {
+    width: 250px;
+    text-align: center;
+    margin-bottom: 6%;
+    color: #E2743E;
+    font-size: 20px;
+    font-weight: bold;
+}

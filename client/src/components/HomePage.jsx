@@ -113,7 +113,7 @@ function HomePage() {
                         </div>
                     ))
                 ) : (
-                    <p>Your wishlist is currently empty.</p>
+                    <p className="sign-in-wish">Sign in to view wishlist.</p>
                 )}
             </div>
         </div>
