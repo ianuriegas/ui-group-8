@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CartItem from "./CartItem"
 import appleImg from '../../images/apples.jpg'
 import '../../styles/Cart.css'
@@ -17,6 +17,18 @@ const Cart = () => {
       { itemName: 'Bagel with Cream Cheese', price: 4.50, quant: 2 },
       { itemName: 'Vegan Brownie', price: 4.00, quant: 1 }
     ]);
+
+    const [userData, setUserData] = useState("");
+
+    useEffect(() => {
+      fetch("/getUsers")
+      .then((response) => response.json())
+      .then((data) => {
+        setUserData(data);
+        console.log(data);
+      });
+    }, [])
+
     const handleQuantityChange = (index, newQuantity) => {
       const updatedItems = items.map((item, i) => {
         if (i === index) {

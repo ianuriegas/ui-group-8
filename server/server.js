@@ -4,8 +4,19 @@ const app = express();
 
 app.use(express.json());
 
-const uri = "mongodb+srv://temp:temp1234@ui-group-8.migbrji.mongodb.net/";
-const client = new MongoClient(uri);
+const uri = "mongodb+srv://temp:temp1234@ui-group-8.migbrji.mongodb.net/"
+let client;
+let db;
+const connectToMongo = async () => {
+  if (!client) {
+    client = new MongoClient(uri);
+      await client.connect();
+      db = client.db("group_8_db"); 
+      console.log("Connected to MongoDB");
+  }
+};
+
+connectToMongo().catch(console.error);
 
 //Function To Sort Items By Category
 function FetchCategory(itemArray, category){
@@ -30,62 +41,67 @@ function sortByPrice( itemArray){
 
 app.get("/getProducts", async (req, res) => {
   try {
-    await client.connect();
-    const database = client.db("group_8_db");
-    const products = database.collection("products");
+    const products = db.collection("products");
     
     const productsList = await products.find({}).toArray();
     res.json(productsList);
   } catch (e) {
     res.status(500).json({ error: e.message });
-  } finally {
-    await client.close();
   }
 });
 
 app.get("/getDiscounts", async (req, res) => {
   try {
-    await client.connect();
-    const database = client.db("group_8_db");
-    const products = database.collection("discounts");
+    const products = db.collection("discounts");
     const productsList = await products.find({}).toArray();
     res.json(productsList);
   } catch (e) {
     res.status(500).json({ error: e.message });
-  } finally {
-    await client.close();
   }
 });
 
 app.get("/getUsers", async (req, res) => {
   try {
+<<<<<<< HEAD
     await client.connect();
     const database = client.db("group_8_db");
     const products = database.collection("users");
     const productsList = await products.find({}).toArray();
     
     res.json(productsList);
+=======
+    const users = db.collection("users");
+    const usersList = await users.find({}).toArray();
+    res.json(usersList);
   } catch (e) {
     res.status(500).json({ error: e.message });
-  } finally {
-    await client.close();
+  }
+});
+
+app.get("/getUserFromUsername", async (req, res) => {
+  try {
+    const { username } = req.query;
+    const users = db.collection("users");
+    const user = await users.findOne({ "username": username }); 
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(user);
+>>>>>>> 20e33c4d (User sync on Profile Page)
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 });
 
 app.post("/createUser", async (req, res) => {
   try {
-    await client.connect();
-    const database = client.db("group_8_db");
-    const users = database.collection("users");
-
-    // Insert the new user data from request body
+    const users = db.collection("users");
     const result = await users.insertOne(req.body);
     res.status(201).json(result);
   } catch (e) {
     res.status(500).json({ error: e.message });
-  } finally {
-    await client.close();
-  }
+  } 
 });
 
 

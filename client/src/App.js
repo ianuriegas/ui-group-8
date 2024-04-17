@@ -11,10 +11,10 @@ import ProductDetails from "./components/ProductDetails";
 import './App.css'
 
 function App() {
-  const [username, setUsername] = React.useState('');
+  const [username, setUsername] = useState('');
   
   // get username from cookie   
-  React.useEffect(() => {
+  useEffect(() => {
     const user = getCookie('username');
     if (user) {
       setUsername(user);
@@ -44,7 +44,7 @@ function App() {
             
             cardnumber="4000-xxxx-xxxx-xxxx" expiredate="4/28"/>} /> */}
             {username ?
-            <Route path="/account" element={<AccountPage name="Keenan Ray" address="323 Burgamy Way, Lands Between" cardnumber="4000-xxxx-xxxx-xxxx" expiredate="4/28"/>} />
+            <Route path="/account" element={<AccountPage username={username}/>} />
             : <></>}
           </Routes>
         </div>

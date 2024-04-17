@@ -96,7 +96,7 @@ const OrderSummary = ({items}) => {
                 checked={selectedAddress === address}
                 onChange={() => handleSelectAddress(address)}
               />
-              <label htmlFor={`address${index}`}>{address}</label>
+              <label htmlFor={`address${index}`} className='text-lg'>{address}</label>
             </div>
           ))}
           <button onClick={handleNewAddress} className="add-address">

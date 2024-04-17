@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../styles/AccountPage.css'
 import ItemCard1 from './ItemCard1'
 import appleImg from '../images/apples.jpg'
@@ -9,23 +9,22 @@ import x from '../images/close.png'
 import { useState } from 'react'
 import { getCookie } from './Navbar'
 
-function AccountPage(props) {
-    const[isOpen,changeToggle] =  useState(false)
-    const [street, changeStreet] = useState(props.street);
-    const [city, changeCity] = useState(props.city);
-    const [state, changeState] = useState(props.state);
-    const [country, changeCountry] = useState(props.country);
-    const [pcode, changePcode]= useState(props.pcode)
-     const userid = getCookie("userid");
-    
+function AccountPage({username}) {
+    const [address, changeAddress] = useState('');
+    const [cardName, changeCardname] = useState('');
+    const [user, setUser] = useState({});
 
-    
-    const [cardType, changeCardtype] = useState(props.cardType);
-    const [cardNumber, changeCardnumber] = useState(props.cNumber);
-    const [expiredate, changeExpiredate] = useState(props.expDate);
-    const [cvv, changeCvv] = useState(props.cvv);
-    
-
+    useEffect(() => {
+        fetch(`/getUserFromUsername?username=${encodeURIComponent(username)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())
+        .then(data => setUser(data))
+        .catch(error => console.error('Error:', error));
+    }, [username]);
     
     function showEdit(classname , classname2){
         const element = document.querySelector(classname);
@@ -149,7 +148,7 @@ function AccountPage(props) {
     
   return (
     <div className='account-page-container'>
-        <h1 id='account-name'>{props.name}</h1>
+        <h1 id='account-name'>{user.firstName} {user.lastName}</h1>
         <div className="personal">
             <div className="personal-info-label">Personal Information</div>
             <div className="address-container">
