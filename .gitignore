@@ -1,2 +1,17 @@
-client/node-modules
+### react ###
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+client/node_modules
 server/node-modules
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch

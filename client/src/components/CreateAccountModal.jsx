@@ -107,18 +107,18 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
             <Typography className="modal-text">Create Account</Typography>
             <br></br>
             <Stack direction={"row"} spacing={6}>
-                <input type="text" id="firstName" name="firstName" placeholder="First Name" style={{height: "60px", width: "350px"}} />
-                <input type="text" id="lastName" name="lastName" placeholder="Last Name" style={{height: "60px", width: "350px"}} />
+                <input type="text" id="firstName" name="firstName" placeholder="First Name" style={{height: "60px", width: "350px", paddingLeft: "10px", color: "black"}} />
+                <input type="text" id="lastName" name="lastName" placeholder="Last Name" style={{height: "60px", width: "350px", paddingLeft: "10px", color: "black"}} />
             </Stack>
             <br></br>
             <Stack direction={"row"} spacing={6}>
-                <input type="text" id="username" name="username" placeholder="Username" style={{height: "60px", width: "350px"}} />
-                <input type="password" id="password" name="password" placeholder="Password" style={{height: "60px", width: "350px"}} />
+                <input type="text" id="username" name="username" placeholder="Username" style={{height: "60px", width: "350px", paddingLeft: "10px", color: "black"}} />
+                <input type="password" id="password" name="password" placeholder="Password" style={{height: "60px", width: "350px", paddingLeft: "10px", color: "black"}} />
             </Stack>
             <br></br>
             <Stack direction={"row"} spacing={6}>
-                <input type="text" id="email" name="email" placeholder="Email" style={{height: "60px", width: "350px"}} />
-                <input type="text" id="cardInformation" name="cardInformation" placeholder="Card Information (optional)" style={{height: "60px", width: "350px"}} />
+                <input type="text" id="email" name="email" placeholder="Email" style={{height: "60px", width: "350px", paddingLeft: "10px", color: "black"}} />
+                <input type="text" id="cardInformation" name="cardInformation" placeholder="Card Information (optional)" style={{height: "60px", width: "350px", paddingLeft: "10px", color: "black"}} />
             </Stack>
             <br></br>
             <Link href="#" onClick={() => { handleCreateAccountCloseAndErrors(); handleLoginOpen();}} className="white-link">Already have an account? <br />Log In</Link>

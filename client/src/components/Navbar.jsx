@@ -7,9 +7,10 @@ import cart from '../images/cart.png'
 import LoginModal from './LoginModal'
 import CreateAccountModal from './CreateAccountModal'
 import ForgotPasswordModal from './ForgotPasswordModal'
+import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function getCookie(name) {
+export function getCookie(name) {
     const cookieString = document.cookie;
 
     // no cookies return null
@@ -80,7 +81,7 @@ function Navbar() {
             <div class="dropdown">
                 <button class="dropbtn"><MenuIcon style={{height: "40px", width: "40px"}} /></button>
                 <div class="dropdown-content">
-                    <a href="#">Account Page</a>
+                    <a href="/account">Account Page</a>
                     <a onClick={() => handleSignOut(username, setUsername)}>Sign Out</a>
                 </div>
             </div> : <div>
@@ -89,7 +90,7 @@ function Navbar() {
                 <CreateAccountModal createAccountOpen={createAccountOpen} handleCreateAccountClose={handleCreateAccountClose} handleLoginOpen={handleLoginOpen} />
                 <ForgotPasswordModal forgotPasswordOpen={forgotPasswordOpen} handleForgotPasswordClose={handleForgotPasswordClose} handleLoginOpen={handleLoginOpen} />
             </div> }
-            <a href="http://"><img id='cart' className='icon' src={cart} alt="Cart Icon Which Shows Users selected items" /></a>
+            <Link to="/cart"><img id='cart' className='icon' src={cart} alt="Cart Icon Which Shows Users selected items" /></Link>
             </div>
 
 
