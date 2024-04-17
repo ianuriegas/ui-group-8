@@ -8,6 +8,7 @@ import CreateAccountModal from './CreateAccountModal'
 import ForgotPasswordModal from './ForgotPasswordModal'
 import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import SearchBar from './SearchBar'
 
 export function getCookie(name) {
     const cookieString = document.cookie;
@@ -67,12 +68,9 @@ function Navbar() {
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
         <div className="nav-1">
-            <a href="http://"><img id='logo' src={logo} alt="Logo Icon That Directs To Home Page" /></a>
+            <Link to="/"><img id='logo' src={logo} alt="Logo Icon That Directs To Home Page" /></Link>
             <div className="search-box">
-            <form>
-            <input  type="search" name="" id="search-bar" placeholder='Search...'/>
-            <button><i className="fa fa-search search-icon" style={{color:'#275143' , backgroundColor:'white' , fontSize:'36px'}}></i></button>
-            </form>
+            <SearchBar />
 
             </div>
             <div className='icon-group'>
@@ -95,32 +93,32 @@ function Navbar() {
 
             </div>
         <div className="nav-2">
-            <div className='nav-item'>
-                <a className='none' href="http://">Frozen</a>
+        <div className='nav-item'>
+                <Link to="/category/frozen" className='none'>Frozen</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Dairy</a>
+                <Link to="/category/dairy" className='none'>Dairy</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Dry Foods</a>
+                <Link to="/category/dry-foods" className='none'>Dry Foods</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Bakery</a>
+                <Link to="/category/bakery" className='none'>Bakery</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Deli</a>
+                <Link to="/category/deli" className='none'>Deli</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Produce</a>
+                <Link to="/category/produce" className='none'>Produce</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Meat/Poultry</a>
+                <Link to="/category/meat-poultry" className='none'>Meat/Poultry</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Kitchenware</a>
+                <Link to="/category/kitchenware" className='none'>Kitchenware</Link>
             </div>
             <div className='nav-item'>
-                <a className='none' href="http://">Home Essentials</a>
+                <Link to="/category/home-essentials" className='none'>Home Essentials</Link>
             </div>
         </div>
     </div>
