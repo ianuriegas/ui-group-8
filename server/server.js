@@ -1,5 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+
 var ObjectId = require('mongodb').ObjectId; 
 const app = express();
 
@@ -52,6 +53,7 @@ app.get("/getProducts", async (req, res) => {
   }
 });
 
+
 app.get("/getProducts/:id", async (req, res) => {
   try {
     
@@ -61,14 +63,11 @@ app.get("/getProducts/:id", async (req, res) => {
     const productsList = await products.findOne({"_id":o_id});
     
     //const item = productsList.find({"_id":o_id }).
-    console.log(productsList)
     res.json(productsList);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
-
-
 
 //Test Route
 // app.get("/getFrozen" , async (req, res) => {
@@ -109,6 +108,7 @@ app.get("/getUsers", async (req, res) => {
     const users = db.collection("users");
     const usersList = await users.find({}).toArray();
     res.json(usersList);
+
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -122,7 +122,6 @@ app.get("/getSubscriptions/:username", async (req, res) => {
     
     
     const usersList = await users.findOne({ "username": userName });
-    console.log(usersList.subscriptions)
    
     
     res.json(usersList);
@@ -138,8 +137,6 @@ app.get("/getFavorites/:username", async (req, res) => {
     
     
     const usersList = await users.findOne({ "username": userName });
-    console.log(usersList.favorites)
-   
     
     res.json(usersList);
   } catch (e) {
@@ -228,21 +225,17 @@ app.post('/updateCart', async (req, res) => {
 app.put('/replaceCart', async (req, res) => {
   try {
       const { username, cart } = req.body;
-
-      // Validate the required inputs
+      console.log(cart)
       if (!username || !cart || !Array.isArray(cart.items)) {
           return res.status(400).json({ error: 'Missing required fields or invalid cart format.' });
       }
 
       const users = db.collection("users");
 
-      // Check if the user exists
       const user = await users.findOne({ username });
       if (!user) {
           return res.status(404).json({ error: 'User not found.' });
       }
-
-      // Replace the cart, ensuring that items and discountCode are correctly structured
       const result = await users.updateOne(
           { username },
           { $set: { 'cart': { items: cart.items, discountCode: cart.discountCode || "" } } }
@@ -413,6 +406,129 @@ app.post('/removeFromFavorites', async (req, res) => {
   }
 });
 
+app.patch('/addAddress', async (req, res) => {
+  try {
+      const { username, newAddress } = req.body;
+      if (!username || !newAddress) {
+          return res.status(400).json({ error: 'Missing required fields.' });
+      }
+
+      if (!newAddress.street || !newAddress.city || !newAddress.state || !newAddress.postalCode || !newAddress.country) {
+          return res.status(400).json({ error: 'Incomplete address information.' });
+      }
+
+      const users = db.collection("users");
+
+      const result = await users.updateOne(
+          { username },
+          { $push: { addresses: newAddress } }
+      );
+
+      if (result.modifiedCount === 0) {
+          return res.status(404).json({ error: 'User not found or no changes made.' });
+      }
+
+      res.json({ message: 'Address added successfully.' });
+  } catch (error) {
+      console.error('Error adding address:', error);
+      res.status(500).json({ error: 'Failed to add address.' });
+  }
+});
+
+app.put('/replaceAddress', async (req, res) => {
+  try {
+      const { username, addresses } = req.body;
+
+      if (!username || !addresses) {
+          return res.status(400).json({ error: 'Missing required fields.' });
+      }
+
+      if (!Array.isArray(addresses)) {
+          return res.status(400).json({ error: 'Invalid address format.' });
+      }
+
+      const users = db.collection("users");
+
+      const result = await users.updateOne(
+          { username },
+          { $set: { addresses } }
+      );
+
+      if (result.matchedCount === 0) {
+          return res.status(404).json({ error: 'User not found.' });
+      } else if (result.modifiedCount === 0) {
+          return res.status(200).json({ message: 'Addresses are already up-to-date.' });
+      }
+
+      res.json({ message: 'Addresses replaced successfully.' });
+  } catch (error) {
+      console.error('Error replacing addresses:', error);
+      res.status(500).json({ error: 'Failed to replace addresses.' });
+  }
+});
+
+app.patch('/addPaymentMethod', async (req, res) => {
+  try {
+      const { username, newPaymentMethod } = req.body;
+
+      if (!username || !newPaymentMethod) {
+          return res.status(400).json({ error: 'Missing required fields.' });
+      }
+
+      if (!newPaymentMethod.cardType || !newPaymentMethod.cardNumber || !newPaymentMethod.expireDate || !newPaymentMethod.cvv) {
+          return res.status(400).json({ error: 'Incomplete payment method information.' });
+      }
+
+      const users = db.collection("users");
+
+      const result = await users.updateOne(
+          { username },
+          { $push: { 'paymentInfo': newPaymentMethod } }
+      );
+
+      if (result.modifiedCount === 0) {
+          return res.status(404).json({ error: 'User not found or no changes made.' });
+      }
+
+      res.json({ message: 'Payment method added successfully.' });
+  } catch (error) {
+      console.error('Error adding payment method:', error);
+      res.status(500).json({ error: 'Failed to add payment method.' });
+  }
+});
+
+app.put('/replacePaymentInfo', async (req, res) => {
+  try {
+      const { username, paymentInfo } = req.body;
+
+      if (!username || !paymentInfo) {
+          return res.status(400).json({ error: 'Missing required fields.' });
+      }
+
+      if (!Array.isArray(paymentInfo)) {
+          return res.status(400).json({ error: 'Invalid payment info format.' });
+      }
+
+      const users = db.collection("users");
+
+      const result = await users.updateOne(
+          { username },
+          { $set: { 'paymentInfo': paymentInfo } }
+      );
+
+      if (result.matchedCount === 0) {
+          return res.status(404).json({ error: 'User not found.' });
+      } else if (result.modifiedCount === 0) {
+          return res.status(200).json({ message: 'Payment info is already up-to-date.' });
+      }
+
+      res.json({ message: 'Payment info replaced successfully.' });
+  } catch (error) {
+      console.error('Error replacing payment info:', error);
+      res.status(500).json({ error: 'Failed to replace payment info.' });
+  }
+});
+
 // New endpoint to get a user's wishlist
 app.get("/wishlist/:username", async (req, res) => {
   try {
@@ -429,9 +545,45 @@ app.get("/wishlist/:username", async (req, res) => {
     res.json(wishlist);
   } catch (e) {
     res.status(500).json({ error: e.message });
+
+  }
+});
+
+app.get("/imgSearch", async (req, res) => {
+  const { itemName } = req.query;
+  if (!itemName) {
+    return res.status(400).json({ message: 'Item name is required' });
+  }
+
+  const apiKey = '8Jy7i43LXWJdnUW2pOqdrVFrhEqYquyu3h7B1ZxzwBZZDrMjkiatJMgN';
+  const url = `https://api.pexels.com/v1/search?query=${encodeURIComponent(itemName)}&orientation=square`;
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: apiKey
+      }
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+
+      if (data.photos && data.photos.length > 0) {
+        res.json({ imageUrl: data.photos[0].src.original });
+      } else {
+        res.status(404).json({ message: 'No images found' });
+      }
+    } else {
+      const errorData = await response.json();
+      res.status(response.status).json({ message: errorData.error || 'Error fetching image' });
+    }
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
 app.listen(5001, () => {
   console.log("Server started on port 5001");
 });
+

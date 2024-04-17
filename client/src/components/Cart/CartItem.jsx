@@ -4,35 +4,29 @@ import '../../styles/Cart.css'
 const CartItem = ({ imgSrc, itemName, price, quant, onQuantityChange }) => {
     const [quantity, setQuantity] = useState(quant);
     const [imageSrc, setImageSrc] = useState(imgSrc);
-    // If there is no imgSrc provided, it will go ahead and try to find one from online.
     useEffect(() => {
-        const fetchFirstImageURL = async () => {
-            const apiKey = '8Jy7i43LXWJdnUW2pOqdrVFrhEqYquyu3h7B1ZxzwBZZDrMjkiatJMgN';
-            const url = `https://api.pexels.com/v1/search?query=${encodeURIComponent(itemName)}&orientation=square`;
-            
+        const fetchImage = async () => {
+            if (imgSrc) return;
+
             try {
-                const response = await fetch(url, {
-                    headers: {
-                      Authorization: apiKey
-                    }
-                  });
-              const data = await response.json();
-                
-              if (data.photos && data.photos.length > 0) {
-                setImageSrc(data.photos[0].src.original);
-                console.log(data.photos[0].src.original);
-              }
+                const response = await fetch(`/imgSearch?itemName=${encodeURIComponent(itemName)}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    setImageSrc(data.imageUrl);
+                } else {
+                    console.error(data.message);
+                }
             } catch (error) {
-              console.error("Error fetching image:", error);
+                console.error("Error fetching image from the server:", error);
             }
         };
-        
         if (!imgSrc) {
-            fetchFirstImageURL();
+            fetchImage();
         }
     }, [itemName, imgSrc]);
     const handleSubtract = () => {
-        const newQuantity = quantity > 1 ? quantity - 1 : 1; // Prevent quantity from going below 1
+        const newQuantity = quantity > 0 ? quantity - 1 : 1;
         setQuantity(newQuantity);
         onQuantityChange(newQuantity);
     };
@@ -43,9 +37,6 @@ const CartItem = ({ imgSrc, itemName, price, quant, onQuantityChange }) => {
         onQuantityChange(newQuantity);
     };
 
-    // Removed fetchFirstImageURL call here
-
-    // Component's return JSX
     return (
         <div className="cart-item flex items-center justify-between space-x-4">
             <img src={imageSrc} alt="Food item" className='w-10 h-10 object-cover'/>

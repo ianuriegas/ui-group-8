@@ -6,8 +6,13 @@ logs
 **/*.back.*
 
 node_modules
+<<<<<<< HEAD
 client/node_modules/
 server/node_modules/
+=======
+client/node_modules
+server/node_modules
+>>>>>>> 20e33c4d (User sync on Profile Page)
 bower_components
 
 *.sublime*

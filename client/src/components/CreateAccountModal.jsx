@@ -39,9 +39,9 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
                 username: username,
                 email: email,
                 password: password,
-                address: {},
-                paymentInfo: cardInformation ? {
-                    cardType: "",
+                addresses: [{}],
+                paymentInfo: [cardInformation ? {
+                    cardType: "Main Card",
                     cardNumber: cardInformation,
                     expireDate: "",
                     cvv: ""
@@ -50,7 +50,7 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
                     cardNumber: "",
                     expireDate: "",
                     cvv: ""
-                },
+                }],
                 wishlist: { productIds: [] },
                 favorites: { productIds: [] },
                 subscriptions: { productIds: [] },

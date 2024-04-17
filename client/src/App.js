@@ -15,7 +15,7 @@ function App() {
   const [name, setName] = React.useState('');
   
   // get username from cookie   
-  React.useEffect(() => {
+  useEffect(() => {
     const user = getCookie('username');
     if (user) {
       setUsername(user);
@@ -36,7 +36,7 @@ function App() {
             <Route exact path="/" element={<HomePage/>} />
             <Route path="/category/:categoryName" element={<Category />} /> 
             <Route path="/product/:productId" element={<ProductDetails />} />
-            <Route path="/cart" element={<Cart/>} />
+            <Route path="/cart" element={<Cart username={username}/>} />
             {/* <Route path="/" element={<AccountPage name={ }
             street="Fill In"
             city="Fill In"
@@ -51,16 +51,7 @@ function App() {
             
             cardnumber="4000-xxxx-xxxx-xxxx" expiredate="4/28"/>} /> */}
             {username ?
-            <Route path="/account" element={<AccountPage name={name} street="Fill In"
-            city="Fill In"
-            state="Fill In"
-            country="Fill In"
-            pcode="Fill In"
-            cardType="Fill In"
-            cNumber="1234--xxxx-xxxx-xxxx"
-            expDate="Fill In"
-            cvv="Fill In"
-            />} />
+            <Route path="/account" element={<AccountPage username={username}/>} />
             : <></>}
           </Routes>
         </div>

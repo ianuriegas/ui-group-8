@@ -3,27 +3,24 @@ import { FaPlus, FaChevronDown } from "react-icons/fa";
 import AddAddressModal from "./AddAddressModal";
 import "../../styles/Cart.css";
 
-const OrderSummary = ({items}) => {
+const OrderSummary = ({ items, _addresses, _cards }) => {
   const [isDelivery, setIsDelivery] = useState(true);
-  const [addresses, setAddresses] = useState([
-    "20 Olde Surrey Drive, Acton, MA",
-    "434 White Canyon, San Antonio, TX",
-  ]);
-  const [selectedAddress, setSelectedAddress] = useState(
-    "434 White Canyon, San Antonio, TX"
-  );
+  const [addresses, setAddresses] = useState(_addresses);
+  const [cards, setcards] = useState(_cards);
+  const [selectedAddressId, setSelectedAddressId] = useState(null);
   const [isExpandedAddress, setIsExpandedAddress] = useState(true);
   const [isExpandedCard, setIsExpandedCard] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
   const [code, setCode] = useState("");
 
-   const calculateTotal = (items) => {
-      return items.reduce((total, item) => total + item.price * item.quant, 0);
-   };
+  const calculateTotal = (items) => {
+    return items
+      .reduce((total, item) => total + item.price * item.quant, 0)
+      .toFixed(2);
+  };
 
-  const handleSelectAddress = (address) => {
-    setSelectedAddress(address);
+  const handleSelectAddress = (id) => {
+    setSelectedAddressId(id);
   };
 
   const toggleExpandAddress = () => {
@@ -34,17 +31,9 @@ const OrderSummary = ({items}) => {
     setIsExpandedCard(!isExpandedCard);
   };
 
-  const handleNewAddress = () => {
-    setIsModalOpen(true);
-  };
   const handleCodeApply = () => {
     console.log(code);
   };
-
-  const cards = [
-    { id: "card1", label: "Visa Ending in 1234" },
-    { id: "card2", label: "MasterCard Ending in 5678" },
-  ];
 
   return (
     <div className="order-summary">
@@ -80,32 +69,31 @@ const OrderSummary = ({items}) => {
         <div
           className={`expandable-list ${isExpandedAddress ? "expanded" : ""}`}
         >
-          {addresses.map((address, index) => (
+          {addresses.map((address) => (
             <div
-              key={index}
+              key={address.id}
               className={`address-item ${
-                selectedAddress === address ? "selected" : ""
+                selectedAddressId === address.id ? "selected" : ""
               }`}
-              onClick={() => handleSelectAddress(address)}
+              onClick={() => handleSelectAddress(address.id)}
             >
               <input
                 type="radio"
-                id={`address${index}`}
+                id={`address${address.id}`}
                 name="address"
-                value={address}
-                checked={selectedAddress === address}
-                onChange={() => handleSelectAddress(address)}
+                value={address.id}
+                checked={selectedAddressId === address.id}
+                onChange={() => handleSelectAddress(address.id)}
               />
-              <label htmlFor={`address${index}`}>{address}</label>
+              <label htmlFor={`address${address.id}`} className="text-lg">
+                {`${address.street}, ${address.city}, ${address.state}, ${address.postalCode}, ${address.country}`}
+              </label>
             </div>
           ))}
-          <button onClick={handleNewAddress} className="add-address">
-            <FaPlus className="add-address-icon" />
-            <strong>Add new address</strong>
-          </button>
         </div>
       </div>
-      <div className="payment-selector mb-[50px]">
+
+      <div className="payment-selector mb-12">
         <div className="collapsible-header" onClick={toggleExpandCard}>
           <h3 className="text-xl font-bold">Select Card</h3>
           <FaChevronDown
@@ -123,11 +111,15 @@ const OrderSummary = ({items}) => {
             >
               {cards.map((card) => (
                 <option key={card.id} value={card.id}>
-                  {card.label}
+                  {`${card.cardType} **** **** **** ${card.cardNumber.slice(
+                    -4
+                  )}`}
                 </option>
               ))}
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"></div>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              {/* Icon or additional content goes here */}
+            </div>
           </div>
         </div>
       </div>
@@ -153,18 +145,14 @@ const OrderSummary = ({items}) => {
         </div>
       </div>
       <div className="total mb-[30px]">
-         <div className="flex justify-between items-center">
-            <span className="text-3xl font-extrabold">Total :</span>
-            <span className="text-3xl font-extrabold text-[#275143]">${calculateTotal(items)}</span>
-         </div>
+        <div className="flex justify-between items-center">
+          <span className="text-3xl font-extrabold">Total :</span>
+          <span className="text-3xl font-extrabold text-[#275143]">
+            ${calculateTotal(items)}
+          </span>
+        </div>
       </div>
       <button className="checkout-button">Checkout</button>
-      {isModalOpen && (
-        <AddAddressModal
-          closeModal={() => setIsModalOpen(false)}
-          addNewAddress={(address) => setAddresses([...addresses, address])}
-        />
-      )}
     </div>
   );
 };

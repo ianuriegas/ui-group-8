@@ -1,54 +1,122 @@
-import { useState } from 'react'
-import CartItem from "./CartItem"
-import appleImg from '../../images/apples.jpg'
-import '../../styles/Cart.css'
-import OrderSummary from "./OrderSummary"
+import { useEffect, useState } from "react";
+import CartItem from "./CartItem";
+import "../../styles/Cart.css";
+import OrderSummary from "./OrderSummary";
 
-const Cart = () => {
-   const [items, setItems] = useState([
-      { itemName: 'Mini Cupcake', price: 10.10, quant: 1 },
-      { itemName: 'Chocolate Chip Cookie', price: 2.50, quant: 3 },
-      { itemName: 'French Baguette', price: 5.00, quant: 2 },
-      { itemName: 'Blueberry Muffin', price: 3.75, quant: 2 },
-      { itemName: 'Cheese Danish', price: 4.25, quant: 1 },
-      { itemName: 'Apple Pie Slice', price: 3.50, quant: 1 },
-      { itemName: 'Cinnamon Roll', price: 3.99, quant: 4 },
-      { itemName: 'Glazed Donut', price: 1.99, quant: 5 },
-      { itemName: 'Bagel with Cream Cheese', price: 4.50, quant: 2 },
-      { itemName: 'Vegan Brownie', price: 4.00, quant: 1 }
-    ]);
-    const handleQuantityChange = (index, newQuantity) => {
-      const updatedItems = items.map((item, i) => {
+const Cart = ({ username }) => {
+  const [user, setUser] = useState({});
+  const [discountCode, setDiscountCode] = useState("");
+  const [addresses, setAddresses] = useState([]);
+  const [cards, setCards] = useState([]);
+
+  const updateCart = async (updatedItems) => {
+    const newCartObj = { items: [], discountCode: discountCode };
+    for (const item of updatedItems) {
+      newCartObj.items.push({ productId: item._id, quantity: item.quant });
+    }
+    console.log(newCartObj);
+    try {
+      const response = await fetch("/replaceCart", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, cart: newCartObj }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Cart replaced successfully:", data);
+      return data;
+    } catch (error) {
+      console.error("Error replacing cart:", error);
+    }
+  };
+  const buildCart = async (items) => {
+    const cart = [];
+
+    for (const { productId, quantity } of items) {
+      try {
+        const response = await fetch(`/getProducts/${productId}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const product = await response.json();
+        product.quant = quantity;
+        cart.push(product);
+      } catch (error) {
+        console.error("Error fetching product with id " + productId, error);
+      }
+    }
+    return cart;
+  };
+
+  useEffect(() => {
+    fetch(`/getUserFromUsername?username=${encodeURIComponent(username)}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setUser(data))
+      .catch((error) => console.error("Error:", error));
+  }, [username]);
+
+  useEffect(() => {
+    if (user && user.firstName) {
+      console.log(user.cart?.items);
+      buildCart(user.cart?.items)
+        .then((cart) => setItems(cart))
+        .catch((error) => console.error(error));
+      setAddresses(user.addresses);
+      setCards(user.paymentInfo);
+    }
+  }, [user]);
+
+  const [items, setItems] = useState();
+
+  const handleQuantityChange = (index, newQuantity) => {
+    const updatedItems = items
+      .map((item, i) => {
         if (i === index) {
           return { ...item, quant: newQuantity };
         }
         return item;
-      });
-      setItems(updatedItems);
-    };
-    return(
-        <><div className="cart-container">
-            <div className="review-cart">
-                <h2>Review Cart</h2>
-                <div>
-               {items.map((item, index) => (
-               <CartItem 
+      })
+      .filter((item) => item.quant > 0);
+    setItems(updatedItems);
+    updateCart(updatedItems);
+  };
+  return (
+    items && (
+      <>
+        <div className="cart-container">
+          <div className="review-cart">
+            <h2>Review Cart</h2>
+            <div>
+              {items.map((item, index) => (
+                <CartItem
                   key={index}
-                  itemName={item.itemName}
-                  imgSrc={null}
-                  price={item.price.toFixed(2)}
+                  itemName={item.productName}
+                  imgSrc={`products/${item.productImage}`}
+                  price={item.price?.toFixed(2)}
                   quant={item.quant}
-                  onQuantityChange={(newQuantity) => handleQuantityChange(index, newQuantity)}
-               />
-               ))}
+                  onQuantityChange={(newQuantity) =>
+                    handleQuantityChange(index, newQuantity)
+                  }
+                />
+              ))}
             </div>
-
-            </div>
-            <OrderSummary items={items}/>
+          </div>
+          <OrderSummary items={items} _addresses={addresses} _cards={cards}/>
         </div>
-        </>
-    
+      </>
     )
-}
+  );
+};
 
-export default Cart
+export default Cart;
