@@ -63,11 +63,31 @@
     flex-direction: row;
     height: 70%;
     gap: 3%;
-
+    align-items: center;
 }
 .wish-img{
     height: 80%;
     width:150px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 60px;
     border-radius: 5px;
    
+}
+
+.wish-name {
+    width: 150px;
+    text-align: center;
+    margin-top: 5px; 
+    color: #E2743E;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.sign-in-wish {
+    width: 250px;
+    text-align: center;
+    margin-bottom: 6%;
+    color: #E2743E;
+    font-size: 20px;
+    font-weight: bold;
 }

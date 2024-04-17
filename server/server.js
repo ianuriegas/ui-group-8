@@ -1,5 +1,7 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+
+var ObjectId = require('mongodb').ObjectId; 
 const app = express();
 
 app.use(express.json());
@@ -51,6 +53,23 @@ app.get("/getProducts", async (req, res) => {
   }
 });
 
+
+app.get("/getProducts/:id", async (req, res) => {
+  try {
+    
+    const products = db.collection("products");
+    var o_id = new ObjectId(req.params.id);
+    
+    const productsList = await products.findOne({"_id":o_id});
+    
+    //const item = productsList.find({"_id":o_id }).
+    console.log(productsList)
+    res.json(productsList);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 //Test Route
 // app.get("/getFrozen" , async (req, res) => {
 // try {
@@ -78,6 +97,7 @@ app.get("/getDiscounts", async (req, res) => {
   try {
     const products = db.collection("discounts");
     const productsList = await products.find({}).toArray();
+    
     res.json(productsList);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -89,6 +109,56 @@ app.get("/getUsers", async (req, res) => {
     const users = db.collection("users");
     const usersList = await users.find({}).toArray();
     res.json(usersList);
+
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get("/getSubscriptions/:username", async (req, res) => {
+  try {
+    
+    const users = db.collection("users");
+    userName = req.params.username
+    
+    
+    const usersList = await users.findOne({ "username": userName });
+    console.log(usersList.subscriptions)
+   
+    
+    res.json(usersList);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+app.get("/getFavorites/:username", async (req, res) => {
+  try {
+    
+    const users = db.collection("users");
+    userName = req.params.username
+    
+    
+    const usersList = await users.findOne({ "username": userName });
+    console.log(usersList.favorites)
+   
+    
+    res.json(usersList);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+app.get("/getWishlist/:username", async (req, res) => {
+  try {
+    
+    const users = db.collection("users");
+    userName = req.params.username
+    
+    
+    const usersList = await users.findOne({ "username": userName });
+    console.log(usersList.wishlist)
+   
+    
+    res.json(usersList);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -99,6 +169,17 @@ app.get("/getUserFromUsername", async (req, res) => {
     const { username } = req.query;
     const users = db.collection("users");
     const user = await users.findOne({ "username": username }); 
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(user);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+=======
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -466,6 +547,24 @@ app.put('/replacePaymentInfo', async (req, res) => {
   } catch (error) {
       console.error('Error replacing payment info:', error);
       res.status(500).json({ error: 'Failed to replace payment info.' });
+
+// New endpoint to get a user's wishlist
+app.get("/wishlist/:username", async (req, res) => {
+  try {
+    const { username } = req.params;
+    const users = db.collection("users");
+    const user = await users.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const wishlist = user.wishlist || { productIds: [] }; // Handle cases where wishlist is empty
+
+    res.json(wishlist);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+
   }
 });
 

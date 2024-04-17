@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Autocomplete, InputAdornment, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import '../styles/SearchBar.css'
 
 function SearchBar() {
     const [productData, setProductData] = React.useState([]);
@@ -26,16 +27,26 @@ function SearchBar() {
     
 
     return (
-        <div>
+        <div 
+            className="searchBar"
+            // style={{
+            //     backgroundColor: "white",
+            //     border: "2px solid #275143",
+            //     width: "50%",
+            //     marginLeft: "20px",
+            //     borderRadius: "10px"
+            // }}
+
+            >
             { productData.length > 0 ?
             <Autocomplete
-                style={{width: "710px"}}
                 freeSolo
                 options={productData}
                 getOptionLabel={(option) => `${option.productName} - (${option.category})`}
                 onChange={handleSelect}
                 renderInput={(params) => (
                     <TextField
+                    
                         {...params}
                         placeholder='Search'
                         variant="outlined"
@@ -59,7 +70,8 @@ function SearchBar() {
             />
             : 
             <TextField 
-                style={{width: "710px"}} 
+                style={{width: "100%"}} 
+                className="searchBar"
                 placeholder='Search'
                 variant="outlined"
                 InputProps={{
