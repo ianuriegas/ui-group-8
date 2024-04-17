@@ -39,7 +39,7 @@ export default function CreateAccountModal({ createAccountOpen, handleCreateAcco
                 username: username,
                 email: email,
                 password: password,
-                address: [{}],
+                addresses: [{}],
                 paymentInfo: [cardInformation ? {
                     cardType: "Main Card",
                     cardNumber: cardInformation,

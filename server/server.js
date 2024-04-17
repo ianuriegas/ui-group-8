@@ -344,6 +344,131 @@ app.post('/removeFromFavorites', async (req, res) => {
   }
 });
 
+app.patch('/addAddress', async (req, res) => {
+  try {
+      const { username, newAddress } = req.body;
+      console.log(username);
+      console.log(newAddress);
+      if (!username || !newAddress) {
+          return res.status(400).json({ error: 'Missing required fields.' });
+      }
+
+      if (!newAddress.street || !newAddress.city || !newAddress.state || !newAddress.postalCode || !newAddress.country) {
+          return res.status(400).json({ error: 'Incomplete address information.' });
+      }
+
+      const users = db.collection("users");
+
+      const result = await users.updateOne(
+          { username },
+          { $push: { addresses: newAddress } }
+      );
+
+      if (result.modifiedCount === 0) {
+          return res.status(404).json({ error: 'User not found or no changes made.' });
+      }
+
+      res.json({ message: 'Address added successfully.' });
+  } catch (error) {
+      console.error('Error adding address:', error);
+      res.status(500).json({ error: 'Failed to add address.' });
+  }
+});
+
+app.put('/replaceAddress', async (req, res) => {
+  try {
+      const { username, addresses } = req.body;
+
+      if (!username || !addresses) {
+          return res.status(400).json({ error: 'Missing required fields.' });
+      }
+
+      if (!Array.isArray(addresses)) {
+          return res.status(400).json({ error: 'Invalid address format.' });
+      }
+
+      const users = db.collection("users");
+
+      const result = await users.updateOne(
+          { username },
+          { $set: { addresses } }
+      );
+
+      if (result.matchedCount === 0) {
+          return res.status(404).json({ error: 'User not found.' });
+      } else if (result.modifiedCount === 0) {
+          return res.status(200).json({ message: 'Addresses are already up-to-date.' });
+      }
+
+      res.json({ message: 'Addresses replaced successfully.' });
+  } catch (error) {
+      console.error('Error replacing addresses:', error);
+      res.status(500).json({ error: 'Failed to replace addresses.' });
+  }
+});
+
+app.patch('/addPaymentMethod', async (req, res) => {
+  try {
+      const { username, newPaymentMethod } = req.body;
+
+      if (!username || !newPaymentMethod) {
+          return res.status(400).json({ error: 'Missing required fields.' });
+      }
+
+      if (!newPaymentMethod.cardType || !newPaymentMethod.cardNumber || !newPaymentMethod.expireDate || !newPaymentMethod.cvv) {
+          return res.status(400).json({ error: 'Incomplete payment method information.' });
+      }
+
+      const users = db.collection("users");
+
+      const result = await users.updateOne(
+          { username },
+          { $push: { 'paymentInfo': newPaymentMethod } }
+      );
+
+      if (result.modifiedCount === 0) {
+          return res.status(404).json({ error: 'User not found or no changes made.' });
+      }
+
+      res.json({ message: 'Payment method added successfully.' });
+  } catch (error) {
+      console.error('Error adding payment method:', error);
+      res.status(500).json({ error: 'Failed to add payment method.' });
+  }
+});
+
+app.put('/replacePaymentInfo', async (req, res) => {
+  try {
+      const { username, paymentInfo } = req.body;
+
+      if (!username || !paymentInfo) {
+          return res.status(400).json({ error: 'Missing required fields.' });
+      }
+
+      if (!Array.isArray(paymentInfo)) {
+          return res.status(400).json({ error: 'Invalid payment info format.' });
+      }
+
+      const users = db.collection("users");
+
+      const result = await users.updateOne(
+          { username },
+          { $set: { 'paymentInfo': paymentInfo } }
+      );
+
+      if (result.matchedCount === 0) {
+          return res.status(404).json({ error: 'User not found.' });
+      } else if (result.modifiedCount === 0) {
+          return res.status(200).json({ message: 'Payment info is already up-to-date.' });
+      }
+
+      res.json({ message: 'Payment info replaced successfully.' });
+  } catch (error) {
+      console.error('Error replacing payment info:', error);
+      res.status(500).json({ error: 'Failed to replace payment info.' });
+  }
+});
+
 app.listen(5001, () => {
   console.log("Server started on port 5001");
 });
