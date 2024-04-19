@@ -53,6 +53,33 @@ app.get("/getProducts", async (req, res) => {
   }
 });
 
+app.post("/meow", async (req, res) => {
+  try {
+      const result = await db.collection("users").updateMany(
+          {
+              "paymentInfo.cardType": "",
+              "paymentInfo.cardNumber": "",
+              "paymentInfo.expireDate": "",
+              "paymentInfo.cvv": ""
+          },
+          {
+              $set: {
+                  "paymentInfo": []
+              }
+          }
+      );
+      res.status(200).json({
+          message: "Update successful",
+          modifiedCount: result.modifiedCount
+      });
+  } catch (error) {
+      res.status(500).json({
+          message: "An error occurred",
+          error: error.message
+      });
+  }
+});
+
 
 app.get("/getProducts/:id", async (req, res) => {
   try {

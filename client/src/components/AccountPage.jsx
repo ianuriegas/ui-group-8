@@ -53,7 +53,7 @@ const AccountPage = ({ username }) => {
   useEffect(() => {
     if (user) {
       setAddresses(user.addresses);
-      setCards(user.paymentInfo ?? []);
+      setCards(Array.isArray(user.paymentInfo) ? user.paymentInfo : []);
       getProducts(user.wishlist?.productIds)
         .then((products) => setWishlistItems(products))
         .catch((error) => {
